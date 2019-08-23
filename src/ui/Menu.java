@@ -8,6 +8,7 @@
  */
 package ui;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import java.io.*;
@@ -20,7 +21,7 @@ public class Menu {
 
 	public Menu() {
 		reader = new Scanner(System.in);
-		list = new ClubAdministration();
+		list = new ClubAdministration("Clubes.txt");
 		systemOperation();
 	}
 
@@ -35,6 +36,9 @@ public class Menu {
 				break;
 			case 2:
 				registerOwner();
+				break;
+			case 4:
+				close = true;
 				break;
 			default:
 				break;
@@ -52,8 +56,15 @@ public class Menu {
 		System.out.println("3. Eliminar dueño");
 		System.out.println("3. Eliminar mascota");
 		System.out.println("4. Salir ");
-
-		int value = reader.nextInt();
+		int value = 0;
+		//En caso de que se ingrese un valor no valido, estas declaraciones permiten atrapar la excepcion...
+		try {
+			value = reader.nextInt();
+			reader.nextLine();
+		}catch(InputMismatchException e) {
+			reader.nextLine();
+		}
+		
 		return value;
 	}
 
@@ -82,30 +93,27 @@ public class Menu {
 		list.registerClub(id, clubName, dateCreation, petType);
 		System.out.println("Se ha añadido un club");
 
-		list.saveClubesOnFile();
+		list.saveClubes();
 
 	}
-	
 	public void registerOwner() {
-		System.out.println("Ingrese la id del club a que desea agregar al dueño ");
-		reader.nextLine();
+		System.out.println("Ingrese el id del club");
 		String idClub = reader.nextLine();
-		System.out.println("Ingrese la id del dueño ");
+		System.out.println("Ingrese el id del dueño");
 		String id = reader.nextLine();
-		System.out.println("Ingrese los nombres del dueño");
+		System.out.println("Ingrese el nombre del dueño");
 		String name = reader.nextLine();
 		System.out.println("Ingrese los apellidos del dueño");
 		String lastName = reader.nextLine();
-		System.out.println("Ingrese la fecha de nacimiento del dueño");
-		String birthDate = reader.nextLine();
-		System.out.println("Ingrese el tipo de mascota que prefiere");
-		String favoritePet = reader.nextLine();
+		System.out.println("Ingrese su fecha de nacimiento");
+		String birthDate= reader.nextLine();
+		System.out.println("Ingrese su mascota favorita");
+		String favoritePet= reader.nextLine();
 		
-		list.searchClub(idClub, id, name, lastName, birthDate, favoritePet);
-		System.out.println("Se ha añadido un dueño");
-
+		list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
+		System.out.println("Se ha agregado un dueño");
 	}
-
+	
 	public static void main(String[] args) {
 
 		Menu m = new Menu();

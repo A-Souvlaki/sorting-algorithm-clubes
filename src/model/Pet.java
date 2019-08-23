@@ -15,5 +15,6 @@ public class Pet {
 		this.gender = gender;
 		this.type = type;
 	}
-	
+	 
 }
+ 

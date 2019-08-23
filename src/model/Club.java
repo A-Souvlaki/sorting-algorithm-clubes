@@ -23,7 +23,23 @@ public class Club implements Serializable {
 		this.petType = petType;
 		owners = new ArrayList<Owner>();
 	}
+	private ArrayList<Owner> loadOwners(){
+		ArrayList<Owner> nOwners = new ArrayList<Owner>();
+		return nOwners;
+	}
 	
+	public void saveOwnersOnFile() {
+		File file = new File("OwnersList.txt");
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			for (Owner owner: owners) {
+				oos.writeObject(owner);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public String getId() {
 		return id;
@@ -45,21 +61,11 @@ public class Club implements Serializable {
 	
 	public void registerOwner(String id,String name,String lastName,String birthDate,String favoritePet) {
 		owners.add(new Owner(id,name,lastName,birthDate,favoritePet));
+		saveOwnersOnFile();
 	}
 	
-	public void saveOwnersInFile() {
-		File file = new File("Owners.txt");
-		try {
-			FileOutputStream fo = new FileOutputStream(file);
-			ObjectOutputStream oos = new ObjectOutputStream(fo);
-			for (Owner owner : owners) {
-				oos.writeObject(owner);
-			}
-			fo.close();
-		}catch(IOException e) {
-			System.out.println("Ficheros: error en la escritura");
-		}
-	}
+	
+
 
 
 	
