@@ -57,7 +57,7 @@ public class ClubAdministration {
 		try {
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
-			for (Club club : clubes) {
+			for (Club club : clubes) { 
 				bw.write(club.getId() + "," + club.getClubName() + "," + club.getDateCreation() + ","
 						+ club.getPetType());
 				bw.newLine();
@@ -76,14 +76,19 @@ public class ClubAdministration {
 	 */
 	public void registerClub(String id, String clubName, String dateCreation, String petType) {
 		clubes.add(new Club(id,clubName,dateCreation,petType));
+		saveClubes();
 	}
 	
 
 	public Club searchClub(String id) {
 		Club searched = null;
-		for (int i = 0; i < clubes.size(); i++) {
-			if(clubes.get(i).getId().equals(id))
+		boolean close = true;
+		for (int i = 0; i < clubes.size() && close; i++) {
+			if(clubes.get(i).getId().equals(id)) { 
 				searched = clubes.get(i);
+				close = false;
+			}
+				 
 		}
 		return searched;
 	}

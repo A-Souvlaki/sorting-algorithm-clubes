@@ -10,8 +10,11 @@ package ui;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Date;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+
 import model.ClubAdministration;
 
 public class Menu {
@@ -37,6 +40,9 @@ public class Menu {
 			case 2:
 				registerOwner();
 				break;
+			case 3:
+				registerPet();
+				break;
 			case 4:
 				close = true;
 				break;
@@ -52,7 +58,7 @@ public class Menu {
 		System.out.println("Elije una opcion :)");
 		System.out.println("1. Registrar un club ");
 		System.out.println("2. Agregar un dueño a un club ");
-		System.out.println("3. Eliminar club");
+		System.out.println("3. Agregar una mascota a un dueño");
 		System.out.println("3. Eliminar dueño");
 		System.out.println("3. Eliminar mascota");
 		System.out.println("4. Salir ");
@@ -81,7 +87,6 @@ public class Menu {
 
 	public void registerClub() {
 		System.out.println("Ingrese el id del club");
-		reader.nextLine();
 		String id = reader.nextLine();
 		System.out.println("Ingrese el nombre del club");
 		String clubName = reader.nextLine();
@@ -92,8 +97,6 @@ public class Menu {
 
 		list.registerClub(id, clubName, dateCreation, petType);
 		System.out.println("Se ha añadido un club");
-
-		list.saveClubes();
 
 	}
 	public void registerOwner() {
@@ -114,6 +117,26 @@ public class Menu {
 		System.out.println("Se ha agregado un dueño");
 	}
 	
+	public void registerPet() {
+		System.out.println("Ingrese el id del club");
+		String idClub = reader.nextLine();
+		System.out.println("Ingrese el id del dueño buscado");
+		String idOwner = reader.nextLine();
+		System.out.println("Ingrese el id de la mascota");
+		String id = reader.nextLine();
+		System.out.println("Ingrese el nombre de la mascota");
+		String petName = reader.nextLine();
+		System.out.println("Ingrese la fecha de nacimiento");
+		String petBirthDay = reader.nextLine();
+		System.out.println("Ingrese el genero de la mascota");
+		String gender = reader.nextLine();
+		System.out.println("Ingrese el tipo de mascota");
+		String type = reader.nextLine(); 
+		
+		list.searchClub(idClub).searchOwner(idOwner).registerPet(id, petName, petBirthDay, gender, type);
+		
+		
+	}
 	public static void main(String[] args) {
 
 		Menu m = new Menu();
