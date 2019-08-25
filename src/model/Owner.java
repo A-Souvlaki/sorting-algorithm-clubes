@@ -26,15 +26,5 @@ public class Owner implements Serializable{
 		pets.add(new Pet(id,petName,petBirthDay,gender,type));
 	}
 
-	public String getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public ArrayList<Pet> dar(){
-		return pets;
-	}
+
 }
