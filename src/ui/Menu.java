@@ -16,6 +16,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 
 import model.ClubAdministration;
+import model.ElementExistsExcepcion;
 
 public class Menu {
 
@@ -57,6 +58,9 @@ public class Menu {
 				}else if(valSubMenu == 4) {
 					list.orderClubsByPet();
 					paint();
+				}else if(valSubMenu == 5) {
+					list.orderClubsByNumberOwners();
+					paint();
 				}
 				break;
 			case 5:
@@ -78,9 +82,32 @@ public class Menu {
 				}else if(valSubMenu2 == 5) {
 					list.searchClub(idClub).orderOwnersByPet();
 					paintOwners(idClub);
-				}	
+				}else if(valSubMenu2 == 6) {
+					list.searchClub(idClub).orderOwnersByPet();
+					paintOwners(idClub);
+				}		
 				break;
 			case 6:
+				System.out.println("Ingrese la id del club");
+				String idClubn = reader.nextLine();
+				System.out.println("Ingrese el id del dueño buscado");
+				String idOwner = reader.nextLine();
+				int valSubMenu3 = showSubMenu3();
+				if(valSubMenu3 == 1) {
+					list.searchClub(idClubn).searchOwner(idOwner).orderPetsById();
+					paintPets(idClubn, idOwner);
+				}else if(valSubMenu3  == 2) {
+					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByName();
+					paintPets(idClubn, idOwner);
+				}else if(valSubMenu3 == 3) {
+					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByDate();
+					paintPets(idClubn, idOwner);
+				}else if(valSubMenu3 == 4) {
+					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByType();
+					paintPets(idClubn, idOwner);
+				}
+				break;
+			case 7:
 				close = true;
 				break;
 			default:
@@ -98,7 +125,8 @@ public class Menu {
 		System.out.println("3. Agregar una mascota a un dueño");
 		System.out.println("4. Mostrar lista ordenada de clubes");
 		System.out.println("5. Mostrar lista ordenada de dueños");
-		System.out.println("4. Salir ");
+		System.out.println("6. Mostrar lista ordenada de mascotas");
+		System.out.println("7. Salir ");
 		int value = 0;
 		//Here I catch the exceptions
 		try {
@@ -138,9 +166,14 @@ public class Menu {
 		String birthDate= reader.nextLine();
 		System.out.println("Ingrese su mascota favorita");
 		String favoritePet= reader.nextLine();
+		try {
+			list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
+			System.out.println("Se ha agregado un dueño");
+		}catch (ElementExistsExcepcion e) {
+			System.out.println(e.getMessage());
+			menuSystem();
+		}
 		
-		list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
-		System.out.println("Se ha agregado un dueño");
 	}
 	
 	public void registerPet() {
@@ -169,6 +202,7 @@ public class Menu {
 		System.out.println("2. Ver listado ordenado por nombres de los clubes");
 		System.out.println("3. Ver listado ordenado por fecha de creacion");
 		System.out.println("4. Ver listado ordenado por tipo de mascota");
+		System.out.println("5. Ver listado ordenado por numero de dueños");
 		int option = 0;
 		try {
 			option = reader.nextInt();
@@ -184,7 +218,8 @@ public class Menu {
 		System.out.println("2. Ver listado ordenado por nombres de los dueños");
 		System.out.println("3. Ver listado ordenado por apellidos de los dueños");
 		System.out.println("4. Ver listado ordenado por fecha de nacimiento");
-		System.out.println("5. Ver listado ordenado por Tipo de mascota");
+		System.out.println("5. Ver listado ordenado por tipo de mascota");
+		System.out.println("6. Ver listado ordenado numero de mascotas");
 		int option = 0;
 		try {
 			option = reader.nextInt();
@@ -197,8 +232,8 @@ public class Menu {
 	
 	public int showSubMenu3() {
 		System.out.println("1. Ver listado ordenado por id ");
-		System.out.println("2. Ver listado ordenado por nombres de los clubes");
-		System.out.println("3. Ver listado ordenado por fecha de creacion");
+		System.out.println("2. Ver listado ordenado por nombres de las mascotas");
+		System.out.println("3. Ver listado ordenado por fecha de nacimiento");
 		System.out.println("4. Ver listado ordenado por tipo de mascota");
 		int option = 0;
 		try {
@@ -216,6 +251,10 @@ public class Menu {
 	
 	public void paintOwners(String idClub) {
 		System.out.println(list.searchClub(idClub).paint());
+	}
+	
+	public void paintPets(String idClubn,String idOwner) {
+		System.out.println(list.searchClub(idClubn).searchOwner(idOwner).paint());
 	}
 	
 	public static void main(String[] args) {

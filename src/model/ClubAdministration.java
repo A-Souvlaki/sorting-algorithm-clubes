@@ -45,7 +45,7 @@ public class ClubAdministration {
 				}
 				br.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
 		}
 		return nClubes;
@@ -146,6 +146,18 @@ public class ClubAdministration {
 		for (int i = 0; i < clubes.size(); i++) {
 			for (int j = 0; j < clubes.size()-1-i; j++) {
 				if(clubes.get(j).compareByPet(clubes.get(j+1))>0) {
+					Club temp = clubes.get(j);
+					clubes.set(j, clubes.get(j+1));
+					clubes.set(j+1, temp);	
+				}
+			}
+		}
+	}
+	
+	public void orderClubsByNumberOwners() {
+		for (int i = 0; i < clubes.size(); i++) {
+			for (int j = 0; j < clubes.size()-1-i; j++) {
+				if(clubes.get(j).numberOwners() > clubes.get(j+1).numberOwners()) {
 					Club temp = clubes.get(j);
 					clubes.set(j, clubes.get(j+1));
 					clubes.set(j+1, temp);	

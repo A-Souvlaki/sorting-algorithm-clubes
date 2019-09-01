@@ -136,10 +136,29 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	public String getPetType() {
 		return petType;
 	}
+	
+	public boolean verifyDuplicateOwner(String id) {
+		boolean duplicate = false;
+		for (Owner owner : owners ) {
+			if (owner.getId().equalsIgnoreCase(id)) {
+				duplicate = true;
+			}
+		}
+		return duplicate;
+	}
 
-	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) {
-		owners.add(new Owner(id, name, lastName, birthDate, favoritePet));
-		saveOwnersOnFile();
+	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) throws ElementExistsExcepcion{
+		
+		if (verifyDuplicateOwner(id)) {
+			throw new ElementExistsExcepcion("El id ingresado ya existe y esta asociado a un dueño en el club");
+		}else {
+			owners.add(new Owner(id,name,lastName,birthDate,favoritePet));
+		}
+	
+	}
+	
+	public int numberOwners() {
+		return owners.size();
 	}
 
 	public Owner searchOwner(String id) {
@@ -157,7 +176,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	@Override
 	public String toString() {
-		return "Club |id=" + String.format("%1$-8s", id) + "| Nombre del Club =" + String.format("%1$-8s", clubName)
+		return "Club" +"| Numero de Dueños =" + numberOwners()+ " |id=" + String.format("%1$-8s", id) + "| Nombre del Club =" + String.format("%1$-8s", clubName)
 				+ "| Fecha de Creacion del Club =" + String.format("%1$-8s", dateCreation)
 				+ "| Tipo de mascotas que recibe el Club =" + String.format("%1$-8s", petType);
 	}
@@ -245,6 +264,18 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 			Owner temp = owners.get(i);
 			owners.set(i, minor);
 			owners.set(index, temp);
+		}
+	}
+	
+	public void orderOwnersByNumberPets() {
+		for (int i = 0; i < owners.size(); i++) {
+			for (int j = 0; j < owners.size() - 1 - i; j++) {
+				if (owners.get(j).numberPets() > owners.get(j+1).numberPets()) {
+					Owner temp = owners.get(j);
+					owners.set(j, owners.get(j + 1));
+					owners.set(j + 1, temp);
+				}
+			}
 		}
 	}
 
