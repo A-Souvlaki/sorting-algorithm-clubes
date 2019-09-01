@@ -18,6 +18,7 @@ public class ClubAdministration {
 	private ArrayList<Club> clubes;
 
 	private String clubFile;
+	
 	/*
 	 * Constructor
 	 */
@@ -36,7 +37,7 @@ public class ClubAdministration {
 		File file = new File(clubFile);
 		if (file.isFile()) { // Verify if it is a file
 			try {
-				BufferedReader br = new BufferedReader(new FileReader(file));// read the file
+				BufferedReader br = new BufferedReader(new FileReader(file));// read the file 
 				String lines;
 				while ((lines = br.readLine()) != null) {
 					String[] write = lines.split(",");
@@ -79,7 +80,11 @@ public class ClubAdministration {
 		saveClubes();
 	}
 	
-
+	/**
+	 * This method allows to find a club by its id
+	 * @param id the id's club
+	 * @return A Club
+	 */
 	public Club searchClub(String id) {
 		Club searched = null;
 		boolean close = true;
@@ -91,6 +96,59 @@ public class ClubAdministration {
 				 
 		}
 		return searched;
+	}
+	/**
+	 * This method allows to order a club's list by bubble sort
+	 */
+	public void orderClubsById() {
+		for (int i = 0; i < clubes.size(); i++) {
+			for (int j = 0; j < clubes.size()-1-i; j++) {
+				if(clubes.get(j).compareTo(clubes.get(j+1)) > 0) {
+					Club temp = clubes.get(j);
+					clubes.set(j, clubes.get(j+1));
+					clubes.set(j+1, temp);		
+				}
+			}
+		}
+	}
+	/**
+	 * This method allows to order a club's list by selection sort
+	 */
+	public void orderClubsByClubName() {
+		for (int i = 0; i < clubes.size(); i++) {
+			Club minor = clubes.get(i);
+			int index = i;
+			for (int j = i +1; j < clubes.size(); j++) {
+				if(clubes.get(j).compare(minor, clubes.get(j)) > 0) {
+					minor = clubes.get(j);
+					index = j;
+				}
+			}
+			Club temp = clubes.get(i);
+			clubes.set(i, minor);
+			clubes.set(index, temp);
+			
+		}
+	}
+	/**
+	 * This method allows to order a club's list by insertion sort
+	 */
+	public void orderClubsByDate() {
+		for (int i = 1; i < clubes.size(); i++) {
+			for (int j = i; j > 0 && clubes.get(j).compareByDate(clubes.get(j-1)) < 0 ; j--) {
+				Club temp = clubes.get(j);
+				clubes.set(j, clubes.get(j-1));
+				clubes.set(j-1, temp);
+			}
+		}
+	}
+	
+	public String paint() {
+		String msg = "";
+		for (int i = 0; i < clubes.size(); i++) {
+			msg += "\n" + clubes.get(i);
+		}
+		return msg;
 	}
 
 

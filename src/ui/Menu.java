@@ -24,7 +24,7 @@ public class Menu {
 
 	public Menu() {
 		reader = new Scanner(System.in);
-		list = new ClubAdministration("Clubes.txt");
+		list = new ClubAdministration("Clubes.CSV");
 		systemOperation();
 	}
 
@@ -44,6 +44,19 @@ public class Menu {
 				registerPet();
 				break;
 			case 4:
+				int valSubMenu = showSubMenu1();
+				if(valSubMenu == 1) {
+					list.orderClubsById();
+					paint();
+				}else if(valSubMenu == 2) {
+					list.orderClubsByClubName();
+					paint();
+				}else if(valSubMenu == 3) {
+					list.orderClubsByDate();
+					paint();
+				}
+				break;
+			case 5:
 				close = true;
 				break;
 			default:
@@ -59,11 +72,11 @@ public class Menu {
 		System.out.println("1. Registrar un club ");
 		System.out.println("2. Agregar un dueño a un club ");
 		System.out.println("3. Agregar una mascota a un dueño");
-		System.out.println("3. Eliminar dueño");
+		System.out.println("4. Mostrar lista ordenada de clubes");
 		System.out.println("3. Eliminar mascota");
 		System.out.println("4. Salir ");
 		int value = 0;
-		//En caso de que se ingrese un valor no valido, estas declaraciones permiten atrapar la excepcion...
+		//Here I catch the exceptions
 		try {
 			value = reader.nextInt();
 			reader.nextLine();
@@ -136,6 +149,27 @@ public class Menu {
 		list.searchClub(idClub).searchOwner(idOwner).registerPet(id, petName, petBirthDay, gender, type);
 		
 		
+	}
+	
+	public int showSubMenu1() {
+		System.out.println("1. Ver listado ordenado por id ");
+		System.out.println("2. Ver listado ordenado por nombres de los clubes");
+		System.out.println("3. Ver listado ordenado por fecha de creacion");
+		System.out.println("4. Ver listado ordenado por tipo de mascota");
+		int option = 0;
+		
+		try {
+			option = reader.nextInt();
+			reader.nextLine();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return option;
+		
+	}
+	
+	public void paint() {
+		System.out.println(list.paint());
 	}
 	public static void main(String[] args) {
 

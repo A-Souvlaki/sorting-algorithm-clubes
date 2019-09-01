@@ -26,5 +26,12 @@ public class Owner implements Serializable{
 		pets.add(new Pet(id,petName,petBirthDay,gender,type));
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	
+	
+
 
 }
