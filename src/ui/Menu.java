@@ -54,9 +54,33 @@ public class Menu {
 				}else if(valSubMenu == 3) {
 					list.orderClubsByDate();
 					paint();
+				}else if(valSubMenu == 4) {
+					list.orderClubsByPet();
+					paint();
 				}
 				break;
 			case 5:
+				System.out.println("Ingrese la id del club");
+				String idClub = reader.nextLine();
+				int valSubMenu2 = showSubMenu2();
+				if(valSubMenu2 == 1) {
+					list.searchClub(idClub).orderOwnersById();
+					paintOwners(idClub);
+				}else if(valSubMenu2 == 2) {
+					list.searchClub(idClub).orderOwnersByName();
+					paintOwners(idClub);
+				}else if(valSubMenu2 == 3) {
+					list.searchClub(idClub).orderOwnersByLastName();
+					paintOwners(idClub);
+				}else if(valSubMenu2 == 4) {
+					list.searchClub(idClub).orderOwnersByDate();
+					paintOwners(idClub);
+				}else if(valSubMenu2 == 5) {
+					list.searchClub(idClub).orderOwnersByPet();
+					paintOwners(idClub);
+				}	
+				break;
+			case 6:
 				close = true;
 				break;
 			default:
@@ -73,7 +97,7 @@ public class Menu {
 		System.out.println("2. Agregar un dueño a un club ");
 		System.out.println("3. Agregar una mascota a un dueño");
 		System.out.println("4. Mostrar lista ordenada de clubes");
-		System.out.println("3. Eliminar mascota");
+		System.out.println("5. Mostrar lista ordenada de dueños");
 		System.out.println("4. Salir ");
 		int value = 0;
 		//Here I catch the exceptions
@@ -86,18 +110,7 @@ public class Menu {
 		
 		return value;
 	}
-
-	public String petType() {
-		System.out.println("1. Perros");
-		System.out.println("2. Gatos");
-		System.out.println("3. Reptiles y Dinosaurios");
-		System.out.println("4. Otro");
-
-		String type = reader.nextLine();
-
-		return type;
-	}
-
+	
 	public void registerClub() {
 		System.out.println("Ingrese el id del club");
 		String id = reader.nextLine();
@@ -106,7 +119,7 @@ public class Menu {
 		System.out.println("Ingrese la fecha de creacion del club");
 		String dateCreation = reader.nextLine();
 		System.out.println("Ingrese el tipo de mascotas que maneja el club");
-		String petType = petType();
+		String petType = reader.nextLine();
 
 		list.registerClub(id, clubName, dateCreation, petType);
 		System.out.println("Se ha añadido un club");
@@ -157,20 +170,54 @@ public class Menu {
 		System.out.println("3. Ver listado ordenado por fecha de creacion");
 		System.out.println("4. Ver listado ordenado por tipo de mascota");
 		int option = 0;
-		
 		try {
 			option = reader.nextInt();
 			reader.nextLine();
 		}catch (Exception e) {
 			// TODO: handle exception
-		}
+		} 
 		return option;
-		
+	}
+	
+	public int showSubMenu2() {
+		System.out.println("1. Ver listado ordenado por id ");
+		System.out.println("2. Ver listado ordenado por nombres de los dueños");
+		System.out.println("3. Ver listado ordenado por apellidos de los dueños");
+		System.out.println("4. Ver listado ordenado por fecha de nacimiento");
+		System.out.println("5. Ver listado ordenado por Tipo de mascota");
+		int option = 0;
+		try {
+			option = reader.nextInt();
+			reader.nextLine();
+		}catch (Exception e) {
+			// TODO: handle exception
+		} 
+		return option;
+	}
+	
+	public int showSubMenu3() {
+		System.out.println("1. Ver listado ordenado por id ");
+		System.out.println("2. Ver listado ordenado por nombres de los clubes");
+		System.out.println("3. Ver listado ordenado por fecha de creacion");
+		System.out.println("4. Ver listado ordenado por tipo de mascota");
+		int option = 0;
+		try {
+			option = reader.nextInt();
+			reader.nextLine();
+		}catch (Exception e) {
+			// TODO: handle exception
+		} 
+		return option;
 	}
 	
 	public void paint() {
 		System.out.println(list.paint());
 	}
+	
+	public void paintOwners(String idClub) {
+		System.out.println(list.searchClub(idClub).paint());
+	}
+	
 	public static void main(String[] args) {
 
 		Menu m = new Menu();

@@ -127,7 +127,6 @@ public class ClubAdministration {
 			Club temp = clubes.get(i);
 			clubes.set(i, minor);
 			clubes.set(index, temp);
-			
 		}
 	}
 	/**
@@ -139,6 +138,18 @@ public class ClubAdministration {
 				Club temp = clubes.get(j);
 				clubes.set(j, clubes.get(j-1));
 				clubes.set(j-1, temp);
+			}
+		}
+	}
+	
+	public void orderClubsByPet() {
+		for (int i = 0; i < clubes.size(); i++) {
+			for (int j = 0; j < clubes.size()-1-i; j++) {
+				if(clubes.get(j).compareByPet(clubes.get(j+1))>0) {
+					Club temp = clubes.get(j);
+					clubes.set(j, clubes.get(j+1));
+					clubes.set(j+1, temp);	
+				}
 			}
 		}
 	}
