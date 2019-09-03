@@ -36,33 +36,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		this.clubName = clubName;
 		this.dateCreation = dateCreation;
 		this.petType = petType;
-		if (owners == null) {
-			owners = new ArrayList<Owner>();
-			serializableCSV();
-		} else {
-			owners = loadOwners();
-		}
-	}
-
-	/**
-	 * This method load the basic owners data to could initialize the program
-	 */
-	private void serializableCSV() {
-		File file = new File("OwnersNoSerializable.CSV");
-		if (file.isFile()) {
-			try {
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				String lines;
-				while ((lines = br.readLine()) != null) {
-					String[] write = lines.split(",");
-					owners.add(new Owner(write[0], write[1], write[2], write[3], write[4]));
-				}
-				br.close();
-			} catch (IOException e) {
-				e.getStackTrace();
-			}
-		}
-		saveOwnersOnFile();
+		owners = new ArrayList<Owner>();
 	}
 
 	/**
@@ -137,6 +111,10 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return petType;
 	}
 	
+	public ArrayList<Owner> getOwners() {
+		return owners;
+	}
+	
 	public boolean verifyDuplicateOwner(String id) {
 		boolean duplicate = false;
 		for (Owner owner : owners ) {
@@ -157,6 +135,8 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	
 	}
 	
+	
+
 	public int numberOwners() {
 		return owners.size();
 	}

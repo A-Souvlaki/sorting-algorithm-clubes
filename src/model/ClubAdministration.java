@@ -25,6 +25,27 @@ public class ClubAdministration {
 	public ClubAdministration(String clubFile) {
 		this.clubFile = clubFile;
 		clubes = loadClubes();
+		loadOwners();
+	}
+	
+	public void loadOwners() {
+		File file = new File("test.CSV");
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			for (Club club : clubes) {
+				String lines;
+				int iterator = 1;
+				while((lines = br.readLine()) != null && iterator <= 4) {
+					String[] write = lines.split(",");
+					club.getOwners().add(new Owner(write[0], write[1], write[2], write[3],write[4]));
+					iterator++;
+				}
+				club.saveOwnersOnFile();
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
-public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner> {
+public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner> {  
 
 	private String id;
 	private String name;
@@ -154,7 +154,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	 * @return A Date type object
 	 */
 	public Date formatDate(String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = null;
 		try {
 			date = dateFormat.parse(format);
