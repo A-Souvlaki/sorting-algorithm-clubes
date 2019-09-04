@@ -36,7 +36,8 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		this.clubName = clubName;
 		this.dateCreation = dateCreation;
 		this.petType = petType;
-		owners = new ArrayList<Owner>();
+		owners = loadOwners();
+
 	}
 
 	/**
@@ -45,33 +46,31 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	 * @return
 	 */
 	private ArrayList<Owner> loadOwners() {
-		ArrayList<Owner> nOwners = new ArrayList<Owner>();
-		File file = new File("OwnersSerializable.CSV");
-		if (file.isFile()) {
+		File file = new File("OwnersSerializable.txt");
+		if (file.exists()) {
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				Owner owner = (Owner) ois.readObject();
-				nOwners.add(owner);
+				owners = (ArrayList<Owner>)ois.readObject();
 				ois.close();
 			} catch (ClassNotFoundException e) {
 				e.getCause();
 			} catch (IOException e) {
 				e.getCause();
 			}
+		}else {
+			owners = new ArrayList<Owner>();
 		}
-		return nOwners;
+		return owners;
 	}
 
 	/**
 	 * Save the owners like serializable objects
 	 */
 	public void saveOwnersOnFile() {
-		File file = new File("OwnersSerializable.CSV");
+		File file = new File("OwnersSerializable.txt");
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			for (Owner owner : owners) {
-				oos.writeObject(owner);
-			}
+			oos.writeObject(owners);
 			oos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,7 +84,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	 * @return A Date type object
 	 */
 	public Date formatDate(String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = null;
 		try {
 			date = dateFormat.parse(format);
@@ -110,14 +109,14 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	public String getPetType() {
 		return petType;
 	}
-	
+
 	public ArrayList<Owner> getOwners() {
 		return owners;
 	}
-	
+
 	public boolean verifyDuplicateOwner(String id) {
 		boolean duplicate = false;
-		for (Owner owner : owners ) {
+		for (Owner owner : owners) {
 			if (owner.getId().equalsIgnoreCase(id)) {
 				duplicate = true;
 			}
@@ -125,17 +124,17 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return duplicate;
 	}
 
-	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) throws ElementExistsExcepcion{
-		
+	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet)
+			throws ElementExistsExcepcion {
+
 		if (verifyDuplicateOwner(id)) {
 			throw new ElementExistsExcepcion("El id ingresado ya existe y esta asociado a un dueño en el club");
-		}else {
-			owners.add(new Owner(id,name,lastName,birthDate,favoritePet));
+		} else {
+			owners.add(new Owner(id, name, lastName, birthDate, favoritePet));
+			
 		}
-	
+
 	}
-	
-	
 
 	public int numberOwners() {
 		return owners.size();
@@ -156,9 +155,10 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	@Override
 	public String toString() {
-		return "Club" +"| Numero de Dueños =" + numberOwners()+ " |id=" + String.format("%1$-8s", id) + "| Nombre del Club =" + String.format("%1$-8s", clubName)
-				+ "| Fecha de Creacion del Club =" + String.format("%1$-8s", dateCreation)
-				+ "| Tipo de mascotas que recibe el Club =" + String.format("%1$-8s", petType);
+		return "Club" + "| Numero de Dueños =" + numberOwners() + " |id=" + String.format("%1$-8s", id)
+				+ "| Nombre del Club =" + String.format("%1$-8s", clubName) + "| Fecha de Creacion del Club ="
+				+ String.format("%1$-8s", dateCreation) + "| Tipo de mascotas que recibe el Club ="
+				+ String.format("%1$-8s", petType);
 	}
 
 	@Override
@@ -246,11 +246,11 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 			owners.set(index, temp);
 		}
 	}
-	
+
 	public void orderOwnersByNumberPets() {
 		for (int i = 0; i < owners.size(); i++) {
 			for (int j = 0; j < owners.size() - 1 - i; j++) {
-				if (owners.get(j).numberPets() > owners.get(j+1).numberPets()) {
+				if (owners.get(j).numberPets() > owners.get(j + 1).numberPets()) {
 					Owner temp = owners.get(j);
 					owners.set(j, owners.get(j + 1));
 					owners.set(j + 1, temp);

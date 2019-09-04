@@ -1,16 +1,15 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.LineNumberReader;
+import java.io.Serializable;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.util.*;
+
+import java.util.ArrayList;;
 
 public class ClubAdministration {
 	//Atributes
@@ -25,28 +24,37 @@ public class ClubAdministration {
 	public ClubAdministration(String clubFile) {
 		this.clubFile = clubFile;
 		clubes = loadClubes();
-		loadOwners();
+		verifyInvariant();
+		
+	}
+	public void verifyInvariant() {
+		for (Club club : clubes) {
+			if(club.getOwners().isEmpty()) {
+				loadOwners();
+			}
+		}
 	}
 	
 	public void loadOwners() {
 		File file = new File("test.CSV");
-		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			for (Club club : clubes) {
-				String lines;
-				int iterator = 1;
-				while((lines = br.readLine()) != null && iterator <= 4) {
+				int iterator = 0;
+				do {
+					String lines = br.readLine();
 					String[] write = lines.split(",");
-					club.getOwners().add(new Owner(write[0], write[1], write[2], write[3],write[4]));
+					club.getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
 					iterator++;
 				}
+				while(iterator < 2);
 				club.saveOwnersOnFile();
 			}
+			br.close();
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
+
 
 	/**
 	 * This method allows to load the file with the clubes that were created before.

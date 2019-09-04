@@ -31,82 +31,20 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 		this.favoritePet = favoritePet;
-		if(pets == null) {
-			pets = new ArrayList<Pet>();
-			serializableCSV();
-		}else {
-			pets = loadPets();
-		}
-	}
-	
-	private void serializableCSV() {
-		File file = new File("PetsNoSerializable.CSV");
-		if (file.isFile()) {
-			try {
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				String lines;
-				while ((lines = br.readLine()) != null) {
-					String[] write = lines.split(",");
-					pets.add(new Pet(write[0], write[1], write[2], write[3], write[4]));
-				}
-				br.close();
-			} catch (IOException e) {
-				e.getStackTrace();
-			}
-		}
+		pets = new ArrayList<Pet>();
 		
-		savePetsOnFile();
-	}
-	
-	/**
-	 * This method allows to recover the pets data in a list for the program
-	 * 
-	 * @return
-	 */
-	private ArrayList<Pet> loadPets() {
-		ArrayList<Pet> nPets = new ArrayList<Pet>();
-		File file = new File("PetSerializable.CSV");
-		if (file.isFile()) {
-			try {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				Pet owner = (Pet) ois.readObject();
-				nPets.add(owner);
-				ois.close();
-			} catch (ClassNotFoundException e) {
-				e.getCause();
-			} catch (IOException e) {
-				e.getCause();
-			}
-		}
-		return nPets;
-	}
-	
-	/**
-	 * Save the pets like serializable objects
-	 */
-	public void savePetsOnFile() {
-		File file = new File("PetSerializable.CSV");
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			for (Pet pet : pets) {
-				oos.writeObject(pet);
-			}
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
+	
 	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) {
 		pets.add(new Pet(id, petName, petBirthDay, gender, type));
-		savePetsOnFile();
 	}
 
 	@Override
 	public String toString() {
-		return "Owner" + "| Numero de mascotas =" + numberPets()+" |id=" + String.format("%1$-9s", id) + "| name=" + String.format("%1$-9s", name) + "| lastName="
-				+ String.format("%1$-9s", lastName) + "| birthDate=" + String.format("%1$-9s", birthDate)
-				+ "| favoritePet=" + String.format("%1$-9s", favoritePet);
+		return "Owner" + "| Numero de mascotas =" + numberPets()+" |id=" + String.format("%1$-13s", id) + "| name=" + String.format("%1$-13s", name) + "| lastName="
+				+ String.format("%1$-13s", lastName) + "| birthDate=" + String.format("%1$-13s", birthDate)
+				+ "| favoritePet=" + String.format("%1$-13s", favoritePet);
 	}
 
 	public String getId() {
