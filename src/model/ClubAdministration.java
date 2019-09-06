@@ -2,9 +2,13 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.LineNumberReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,55 +18,49 @@ import java.util.ArrayList;;
 public class ClubAdministration {
 	//Atributes
 	
-	private ArrayList<Club> clubes;
+	private ArrayList<Club> clubs;
 
 	private String clubFile;
 	
 	/*
 	 * Constructor
 	 */
-	public ClubAdministration(String clubFile) {
+	public ClubAdministration(String clubFile) throws ElementExistsExcepcion {
 		this.clubFile = clubFile;
-		clubes = loadClubes();
-		verifyInvariant();
+		clubs = loadclubs();
 		
 	}
-	public void verifyInvariant() {
-		for (Club club : clubes) {
-			if(club.getOwners().isEmpty()) {
-				loadOwners();
-			}
-		}
-	}
-	
-	public void loadOwners() {
-		File file = new File("test.CSV");
+	public void loadOwnerToClubs() {
+		File file = new File("OwnersSerializable.txt");
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			for (Club club : clubes) {
+			fis = new FileInputStream(file.getAbsolutePath());
+			ois = new ObjectInputStream(fis);
+			for (int i = 0; i < clubs.size(); i++) {
 				int iterator = 0;
 				do {
-					String lines = br.readLine();
-					String[] write = lines.split(",");
-					club.getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
+					ArrayList<Owner> o = (ArrayList<Owner>)ois.readObject();
 					iterator++;
-				}
-				while(iterator < 2);
-				club.saveOwnersOnFile();
+				} while (iterator <1);
+				
 			}
-			br.close();
 		}catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 	}
+	
 
 
 	/**
-	 * This method allows to load the file with the clubes that were created before.
-	 * @return A list with the available clubes or if the program is excecuted by
+	 * This method allows to load the file with the clubs that were created before.
+	 * @return A list with the available clubs or if the program is executed by
 	 *         first time a empty list.
 	 */
-	private ArrayList<Club> loadClubes() {
-		ArrayList<Club> nClubes = new ArrayList<Club>();
+	private ArrayList<Club> loadclubs() {
+		ArrayList<Club> nclubs = new ArrayList<Club>(); 
 		File file = new File(clubFile);
 		if (file.isFile()) { // Verify if it is a file
 			try {
@@ -70,43 +68,43 @@ public class ClubAdministration {
 				String lines;
 				while ((lines = br.readLine()) != null) {
 					String[] write = lines.split(",");
-					nClubes.add(new Club(write[0], write[1], write[2], write[3]));// add the clubes
+					nclubs.add(new Club(write[0], write[1], write[2], write[3]));// add the clubs
 				}
 				br.close();
 			} catch (IOException e) {
-				e.printStackTrace(); 
+				e.printStackTrace();  
 			}
 		}
-		return nClubes;
+		return nclubs;
 	}
 	/**
-	 * This method allows to save the cubles in a text file.
+	 * This method allows to save the clubs in a text file.
 	 */
-	public void saveClubes() {
+	public void saveclubs() {
 		File file = new File(clubFile);
 		try {
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
-			for (Club club : clubes) { 
+			for (Club club : clubs) { 
 				bw.write(club.getId() + "," + club.getClubName() + "," + club.getDateCreation() + ","
 						+ club.getPetType());
 				bw.newLine();
 			}
 			bw.close();
-		} catch (IOException e) {
+		} catch (IOException e) { 
 			e.printStackTrace();
 		}
 	}
 	/**
 	 * This method allows to create a club
-	 * @param id The club's id. This id must will not repeated between the clubes list
+	 * @param id The club's id. This id must will not repeated between the clubs list
 	 * @param clubName The club's name
 	 * @param dateCreation The club's creation date
 	 * @param petType The club's type
 	 */
 	public void registerClub(String id, String clubName, String dateCreation, String petType) {
-		clubes.add(new Club(id,clubName,dateCreation,petType));
-		saveClubes();
+		clubs.add(new Club(id,clubName,dateCreation,petType));
+		saveclubs();
 	}
 	
 	/**
@@ -117,9 +115,9 @@ public class ClubAdministration {
 	public Club searchClub(String id) {
 		Club searched = null;
 		boolean close = true;
-		for (int i = 0; i < clubes.size() && close; i++) {
-			if(clubes.get(i).getId().equals(id)) { 
-				searched = clubes.get(i);
+		for (int i = 0; i < clubs.size() && close; i++) {
+			if(clubs.get(i).getId().equals(id)) { 
+				searched = clubs.get(i);
 				close = false;
 			}
 				 
@@ -130,12 +128,12 @@ public class ClubAdministration {
 	 * This method allows to order a club's list by bubble sort
 	 */
 	public void orderClubsById() {
-		for (int i = 0; i < clubes.size(); i++) {
-			for (int j = 0; j < clubes.size()-1-i; j++) {
-				if(clubes.get(j).compareTo(clubes.get(j+1)) > 0) {
-					Club temp = clubes.get(j);
-					clubes.set(j, clubes.get(j+1));
-					clubes.set(j+1, temp);		
+		for (int i = 0; i < clubs.size(); i++) {
+			for (int j = 0; j < clubs.size()-1-i; j++) {
+				if(clubs.get(j).compareTo(clubs.get(j+1)) > 0) {
+					Club temp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, temp);		
 				}
 			}
 		}
@@ -144,61 +142,179 @@ public class ClubAdministration {
 	 * This method allows to order a club's list by selection sort
 	 */
 	public void orderClubsByClubName() {
-		for (int i = 0; i < clubes.size(); i++) {
-			Club minor = clubes.get(i);
+		for (int i = 0; i < clubs.size(); i++) {
+			Club minor = clubs.get(i);
 			int index = i;
-			for (int j = i +1; j < clubes.size(); j++) {
-				if(clubes.get(j).compare(minor, clubes.get(j)) > 0) {
-					minor = clubes.get(j);
+			for (int j = i +1; j < clubs.size(); j++) {
+				if(clubs.get(j).compare(minor, clubs.get(j)) > 0) {
+					minor = clubs.get(j);
 					index = j;
 				}
 			}
-			Club temp = clubes.get(i);
-			clubes.set(i, minor);
-			clubes.set(index, temp);
+			Club temp = clubs.get(i);
+			clubs.set(i, minor);
+			clubs.set(index, temp);
 		}
 	}
 	/**
 	 * This method allows to order a club's list by insertion sort
 	 */
 	public void orderClubsByDate() {
-		for (int i = 1; i < clubes.size(); i++) {
-			for (int j = i; j > 0 && clubes.get(j).compareByDate(clubes.get(j-1)) < 0 ; j--) {
-				Club temp = clubes.get(j);
-				clubes.set(j, clubes.get(j-1));
-				clubes.set(j-1, temp);
+		for (int i = 1; i < clubs.size(); i++) {
+			for (int j = i; j > 0 && clubs.get(j).compareByDate(clubs.get(j-1)) < 0 ; j--) {
+				Club temp = clubs.get(j);
+				clubs.set(j, clubs.get(j-1));
+				clubs.set(j-1, temp);
 			}
 		}
 	}
 	
 	public void orderClubsByPet() {
-		for (int i = 0; i < clubes.size(); i++) {
-			for (int j = 0; j < clubes.size()-1-i; j++) {
-				if(clubes.get(j).compareByPet(clubes.get(j+1))>0) {
-					Club temp = clubes.get(j);
-					clubes.set(j, clubes.get(j+1));
-					clubes.set(j+1, temp);	
+		for (int i = 0; i < clubs.size(); i++) {
+			for (int j = 0; j < clubs.size()-1-i; j++) {
+				if(clubs.get(j).compareByPet(clubs.get(j+1))>0) {
+					Club temp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, temp);	
 				}
 			}
 		}
 	}
 	
 	public void orderClubsByNumberOwners() {
-		for (int i = 0; i < clubes.size(); i++) {
-			for (int j = 0; j < clubes.size()-1-i; j++) {
-				if(clubes.get(j).numberOwners() > clubes.get(j+1).numberOwners()) {
-					Club temp = clubes.get(j);
-					clubes.set(j, clubes.get(j+1));
-					clubes.set(j+1, temp);	
+		for (int i = 0; i < clubs.size(); i++) {
+			for (int j = 0; j < clubs.size()-1-i; j++) {
+				if(clubs.get(j).numberOwners() > clubs.get(j+1).numberOwners()) {
+					Club temp = clubs.get(j);
+					clubs.set(j, clubs.get(j+1));
+					clubs.set(j+1, temp);	
 				}
 			}
 		}
 	}
 	
+	public String secuencialSearchById(String id) {
+		String msg = "";
+		for (int i = 0; i < clubs.size(); i++) {
+			if(clubs.get(i).getId().equalsIgnoreCase(id)) {
+				msg += clubs.get(i);
+			}
+		}
+		return msg;
+	}
+	
+	public String secuencialSearchByClubName(String clubName) {
+		String msg = "";
+		for (int i = 0; i < clubs.size(); i++) {
+			if(clubs.get(i).getClubName().equalsIgnoreCase(clubName)) {
+				msg += clubs.get(i);
+			}
+		}
+		return msg;
+			
+	}
+	public String secuencialSearchByClubDate(String date) {
+		String msg = "";
+		for (int i = 0; i < clubs.size(); i++) {
+			if(clubs.get(i).getDateCreation().equalsIgnoreCase(date)) {
+				msg += clubs.get(i);
+			}
+		}
+		return msg;
+	}
+	public String secuencialSearchByPet(String pet) {
+		String msg = "";
+		for (int i = 0; i < clubs.size(); i++) {
+			if(clubs.get(i).getPetType().equalsIgnoreCase(pet)) {
+				msg += clubs.get(i);
+			}
+		}
+		return msg;
+	}
+	
+	public String binarySearchById(String id) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = clubs.size()-1;
+		while (start <= end && !found) {
+			int middle = (start+end)/2;
+			if(clubs.get(middle).compareByIdBS(id)==0) {
+				found = true;
+				msg += clubs.get(middle);		
+			}else if(clubs.get(middle).compareByIdBS(id)>0) {
+				end = middle -1;
+			}else {
+				start = middle+1;
+			}
+			
+		}
+		return msg;
+	}
+	
+	public String binarySearchByClubName(String name) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = clubs.size()-1;
+		while (start <= end && !found) {
+			int middle = (start+end)/2;
+			if(clubs.get(middle).compareByNameBS(name)==0) {
+				found = true;
+				msg += clubs.get(middle);		
+			}else if(clubs.get(middle).compareByNameBS(name)>0) {
+				end = middle -1;
+			}else {
+				start = middle+1;
+			}
+			
+		}
+		return msg;	
+	}
+	public String binarySearchByClubDate(String date) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = clubs.size()-1;
+		while (start <= end && !found) {
+			int middle = (start+end)/2;
+			if(clubs.get(middle).compareByDateBS(date)==0) {
+				found = true;
+				msg += clubs.get(middle);		
+			}else if(clubs.get(middle).compareByDateBS(date)>0) {
+				end = middle -1;
+			}else {
+				start = middle+1;
+			}
+			
+		}
+		return msg;	
+	}
+	public String binarySearchByPet(String pet) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = clubs.size()-1;
+		while (start <= end && !found) {
+			int middle = (start+end)/2;
+			if(clubs.get(middle).compareByPetBS(pet)==0) {
+				found = true;
+				msg += clubs.get(middle);		
+			}else if(clubs.get(middle).compareByPetBS(pet)>0) {
+				end = middle -1;
+			}else {
+				start = middle+1;
+			}
+			
+		}
+		return msg;	
+	}
+	
+		
 	public String paint() {
 		String msg = "";
-		for (int i = 0; i < clubes.size(); i++) {
-			msg += "\n" + clubes.get(i);
+		for (int i = 0; i < clubs.size(); i++) {
+			msg += "\n" + clubs.get(i);
 		}
 		return msg;
 	}

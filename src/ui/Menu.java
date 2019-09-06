@@ -25,7 +25,12 @@ public class Menu {
 
 	public Menu() {
 		reader = new Scanner(System.in);
-		list = new ClubAdministration("Clubes.CSV");
+		try {
+			list = new ClubAdministration("Clubes.CSV");
+		} catch (ElementExistsExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		systemOperation();
 	}
 
@@ -166,13 +171,9 @@ public class Menu {
 		String birthDate= reader.nextLine();
 		System.out.println("Ingrese su mascota favorita");
 		String favoritePet= reader.nextLine();
-		try {
-			list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
-			System.out.println("Se ha agregado un dueño");
-		}catch (ElementExistsExcepcion e) {
-			System.out.println(e.getMessage());
-			menuSystem();
-		}
+		list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
+		System.out.println("Se ha agregado un dueño");
+	
 		
 	}
 	

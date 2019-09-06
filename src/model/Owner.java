@@ -17,6 +17,10 @@ import java.util.Date;
 
 public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner> {  
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 	private String lastName;
@@ -31,11 +35,18 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 		this.favoritePet = favoritePet;
-		pets = new ArrayList<Pet>();
+		pets = new ArrayList<Pet>(); 
 		
 	}
+	
+	/**
+	 * This method allows to recover the owners data in a list for the program
+	 * 
+	 * @return
+	 */
 
 	
+
 	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) {
 		pets.add(new Pet(id, petName, petBirthDay, gender, type));
 	}
@@ -65,6 +76,10 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 
 	public String getFavoritePet() {
 		return favoritePet;
+	}
+	
+	public ArrayList<Pet> getPets() {
+		return pets;
 	}
 	
 	public int numberPets() {
@@ -108,6 +123,26 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 
 	public int compareByPet(Owner o) {
 		return favoritePet.compareTo(o.getFavoritePet());
+	}
+	
+	public int compareByIdBS(String o) {
+		return id.compareTo(o);
+	}
+
+	public int compareByNameBS(String o) {
+		return name.compareTo(o);
+	}
+	
+	public int compareByLastNameBS(String o) {
+		return lastName.compareTo(o);
+	}
+
+	public int compareByDateBS(String o) {
+		return formatDate(birthDate).compareTo(formatDate(o));
+	}
+
+	public int compareByPetBS(String o) {
+		return favoritePet.compareTo(o);
 	}
 
 	public void orderPetsById() {
@@ -160,6 +195,129 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 				}
 			}
 		}
+	}
+	
+	public String secuencialSearchById(String id) {
+		String msg = "";
+		for (int i = 0; i < pets.size(); i++) {
+			if (pets.get(i).getId().equalsIgnoreCase(id)) {
+				msg += pets.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String secuencialSearchByName(String name) {
+		String msg = "";
+		for (int i = 0; i < pets.size(); i++) {
+			if (pets.get(i).getPetName().equalsIgnoreCase(name)) {
+				msg += pets.get(i);
+			}
+		}
+		return msg;
+
+	}
+	
+
+	public String secuencialSearchByDate(String date) {
+		String msg = "";
+		for (int i = 0; i < pets.size(); i++) {
+			if (pets.get(i).getPetBirthDay().equalsIgnoreCase(date)) {
+				msg += pets.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String secuencialSearchByPet(String pet) {
+		String msg = "";
+		for (int i = 0; i < pets.size(); i++) {
+			if (pets.get(i).getType().equalsIgnoreCase(pet)) {
+				msg += pets.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String binarySearchById(String id) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = pets.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (pets.get(middle).compareByIdBS(id) == 0) {
+				found = true;
+				msg += pets.get(middle);
+			} else if (pets.get(middle).compareByIdBS(id) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+
+	public String binarySearchByName(String name) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = pets.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (pets.get(middle).compareByNameBS(name) == 0) {
+				found = true;
+				msg += pets.get(middle);
+			} else if (pets.get(middle).compareByNameBS(name) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+	
+
+	public String binarySearchByDate(String date) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = pets.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (pets.get(middle).compareByDateBS(date) == 0) {
+				found = true;
+				msg += pets.get(middle);
+			} else if (pets.get(middle).compareByDateBS(date) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+
+	public String binarySearchByPet(String pet) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = pets.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (pets.get(middle).compareByPetBS(pet) == 0) {
+				found = true;
+				msg += pets.get(middle);
+			} else if (pets.get(middle).compareByPetBS(pet) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
 	}
 
 	public String paint() {

@@ -8,6 +8,10 @@ import java.util.Date;
 
 public class Pet implements Serializable, Comparable<Pet>,Comparator<Pet> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String petName;
 	private String petBirthDay;
@@ -21,6 +25,7 @@ public class Pet implements Serializable, Comparable<Pet>,Comparator<Pet> {
 		this.gender = gender;
 		this.type = type;
 	}
+	
 
 	public String getId() {
 		return id;
@@ -44,10 +49,9 @@ public class Pet implements Serializable, Comparable<Pet>,Comparator<Pet> {
 
 	@Override
 	public String toString() {
-		return "Pet [id=" + id + ", petName=" + petName + ", petBirthDay=" + petBirthDay + ", gender=" + gender
-				+ ", type=" + type + "]";
+		return "Pet"+" |id=" + id + "| petName=" + String.format("%1$-13s",petName) + "| petBirthDay=" + String.format("%1$-13s",petBirthDay) + "| gender=" + String.format("%1$-13s",gender)
+				+ "| type=" + String.format("%1$-13s",type);
 	}
-
 	@Override
 	public int compareTo(Pet o) {
 		return id.compareTo(o.getId());

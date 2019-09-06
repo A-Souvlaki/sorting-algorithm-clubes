@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -21,6 +23,10 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Attributes
 	private String id;
 	private String clubName;
@@ -36,7 +42,35 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		this.clubName = clubName;
 		this.dateCreation = dateCreation;
 		this.petType = petType;
-		owners = loadOwners();
+		this.owners = loadOwners();
+	}
+
+	public void setOwners(ArrayList<Owner> owners) {
+		this.owners = owners;
+	}
+
+	/**
+	 * Save the owners like serializable objects
+	 */
+	public void saveOwnersOnFile() {
+		ObjectOutputStream oos;
+		ArrayList<Owner> o = new ArrayList<Owner>();
+		File file = new File("OwnersSerializable.dat");
+		try {
+			if (file.length() == 0) {
+				oos = new ObjectOutputStream(new FileOutputStream(file));
+			} else {
+				oos = new MyObjectOutputStream(new FileOutputStream(file, true));
+			}
+
+			for (Owner owner : owners) {
+				o.add(owner);
+			}
+			oos.writeObject(o);
+			oos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -46,35 +80,23 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	 * @return
 	 */
 	private ArrayList<Owner> loadOwners() {
-		File file = new File("OwnersSerializable.txt");
+		File file = new File("OwnersSerializable.dat");
 		if (file.exists()) {
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				owners = (ArrayList<Owner>)ois.readObject();
+				owners = new ArrayList<Owner>();
+				Owner aux;
+				while ((aux = (Owner) ois.readObject()) != null) {
+					owners.add(aux);
+				}
 				ois.close();
-			} catch (ClassNotFoundException e) {
-				e.getCause();
-			} catch (IOException e) {
-				e.getCause();
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
-		}else {
+		} else {
 			owners = new ArrayList<Owner>();
 		}
 		return owners;
-	}
-
-	/**
-	 * Save the owners like serializable objects
-	 */
-	public void saveOwnersOnFile() {
-		File file = new File("OwnersSerializable.txt");
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			oos.writeObject(owners);
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -124,16 +146,10 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return duplicate;
 	}
 
-	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet)
-			throws ElementExistsExcepcion {
-
-		if (verifyDuplicateOwner(id)) {
-			throw new ElementExistsExcepcion("El id ingresado ya existe y esta asociado a un dueño en el club");
-		} else {
-			owners.add(new Owner(id, name, lastName, birthDate, favoritePet));
-			
-		}
-
+	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) {
+		Owner o = new Owner(id, name, lastName, birthDate, favoritePet);
+		owners.add(o);
+		saveOwnersOnFile();
 	}
 
 	public int numberOwners() {
@@ -155,7 +171,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	@Override
 	public String toString() {
-		return "Club" + "| Numero de Dueños =" + numberOwners() + " |id=" + String.format("%1$-8s", id)
+		return "Club" + "| Numero de Dueï¿½os =" + numberOwners() + " |id=" + String.format("%1$-8s", id)
 				+ "| Nombre del Club =" + String.format("%1$-8s", clubName) + "| Fecha de Creacion del Club ="
 				+ String.format("%1$-8s", dateCreation) + "| Tipo de mascotas que recibe el Club ="
 				+ String.format("%1$-8s", petType);
@@ -177,6 +193,22 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	public int compareByPet(Club o) {
 		return petType.compareTo(o.getPetType());
+	}
+
+	public int compareByIdBS(String o) {
+		return id.compareTo(o);
+	}
+
+	public int compareByNameBS(String o) {
+		return clubName.compareTo(o);
+	}
+
+	public int compareByDateBS(String o) {
+		return formatDate(dateCreation).compareTo(formatDate(o));
+	}
+
+	public int compareByPetBS(String o) {
+		return petType.compareTo(o);
 	}
 
 	public void orderOwnersById() {
@@ -257,6 +289,158 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 				}
 			}
 		}
+	}
+
+	public String secuencialSearchById(String id) {
+		String msg = "";
+		for (int i = 0; i < owners.size(); i++) {
+			if (owners.get(i).getId().equalsIgnoreCase(id)) {
+				msg += owners.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String secuencialSearchByName(String name) {
+		String msg = "";
+		for (int i = 0; i < owners.size(); i++) {
+			if (owners.get(i).getName().equalsIgnoreCase(name)) {
+				msg += owners.get(i);
+			}
+		}
+		return msg;
+
+	}
+	
+	public String secuencialSearchByLastName(String clubName) {
+		String msg = "";
+		for (int i = 0; i < owners.size(); i++) {
+			if (owners.get(i).getLastName().equalsIgnoreCase(clubName)) {
+				msg += owners.get(i);
+			}
+		}
+		return msg;
+
+	}
+
+	public String secuencialSearchByOwnerDate(String date) {
+		String msg = "";
+		for (int i = 0; i < owners.size(); i++) {
+			if (owners.get(i).getBirthDate().equalsIgnoreCase(date)) {
+				msg += owners.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String secuencialSearchByPet(String pet) {
+		String msg = "";
+		for (int i = 0; i < owners.size(); i++) {
+			if (owners.get(i).getFavoritePet().equalsIgnoreCase(pet)) {
+				msg += owners.get(i);
+			}
+		}
+		return msg;
+	}
+
+	public String binarySearchById(String id) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = owners.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (owners.get(middle).compareByIdBS(id) == 0) {
+				found = true;
+				msg += owners.get(middle);
+			} else if (owners.get(middle).compareByIdBS(id) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+
+	public String binarySearchByName(String name) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = owners.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (owners.get(middle).compareByNameBS(name) == 0) {
+				found = true;
+				msg += owners.get(middle);
+			} else if (owners.get(middle).compareByNameBS(name) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+	
+	public String binarySearchByLastName(String lastName) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = owners.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (owners.get(middle).compareByLastNameBS(lastName) == 0) {
+				found = true;
+				msg += owners.get(middle);
+			} else if (owners.get(middle).compareByLastNameBS(lastName) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+
+	public String binarySearchByDate(String date) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = owners.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (owners.get(middle).compareByDateBS(date) == 0) {
+				found = true;
+				msg += owners.get(middle);
+			} else if (owners.get(middle).compareByDateBS(date) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
+	}
+
+	public String binarySearchByPet(String pet) {
+		String msg = "";
+		boolean found = false;
+		int start = 0;
+		int end = owners.size() - 1;
+		while (start <= end && !found) {
+			int middle = (start + end) / 2;
+			if (owners.get(middle).compareByPetBS(pet) == 0) {
+				found = true;
+				msg += owners.get(middle);
+			} else if (owners.get(middle).compareByPetBS(pet) > 0) {
+				end = middle - 1;
+			} else {
+				start = middle + 1;
+			}
+
+		}
+		return msg;
 	}
 
 	public String paint() {
