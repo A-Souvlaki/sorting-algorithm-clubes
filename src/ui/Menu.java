@@ -172,6 +172,7 @@ public class Menu {
 		System.out.println("Ingrese su mascota favorita");
 		String favoritePet= reader.nextLine();
 		list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
+		list.write();
 		System.out.println("Se ha agregado un dueño");
 	
 		

@@ -87,6 +87,23 @@ public class Pet implements Serializable, Comparable<Pet>,Comparator<Pet> {
 		return type.compareTo(o.getType());
 	}
 	
+	public int compareByIdBS(String o) {
+		return id.compareTo(o);
+	}
+
+	public int compareByNameBS(String o) {
+		return petName.compareTo(o);
+	}
+	
+
+	public int compareByDateBS(String o) {
+		return formatDate(petBirthDay).compareTo(formatDate(o));
+	}
+
+	public int compareByPetBS(String o) {
+		return type.compareTo(o);
+	}
+	
 
 	
 	

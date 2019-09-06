@@ -28,32 +28,44 @@ public class ClubAdministration {
 	public ClubAdministration(String clubFile) throws ElementExistsExcepcion {
 		this.clubFile = clubFile;
 		clubs = loadclubs();
-		
+		save();
 	}
-	public void loadOwnerToClubs() {
-		File file = new File("OwnersSerializable.txt");
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-		
+	
+	public void write() {
+		ObjectOutputStream oos;
+		File file = new File("Prueba.dat");
 		try {
-			fis = new FileInputStream(file.getAbsolutePath());
-			ois = new ObjectInputStream(fis);
+			oos = new ObjectOutputStream(new FileOutputStream(file));
+		
 			for (int i = 0; i < clubs.size(); i++) {
-				int iterator = 0;
-				do {
-					ArrayList<Owner> o = (ArrayList<Owner>)ois.readObject();
-					iterator++;
-				} while (iterator <1);
-				
+				oos.write(i);
+				oos.writeObject(clubs.get(i).getOwners());
 			}
+			oos.close();
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	public void save() {
+		File file = new File("Prueba.dat");
+		if (file.exists()) {
+			try {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+				for (int i = 0; i < clubs.size(); i++) {
+					int pos = ois.read();
+					ArrayList<Owner> o = (ArrayList<Owner>)ois.readObject();
+					clubs.get(pos).setOwners(o);
+					
+					//System.out.println(pos);
+					System.out.println(clubs.get(i).getOwners().size());
+				}
+				ois.close();
+			}catch (Exception e) { 
+				// TODO: handle exception
+			}
+		}
 		
 	}
-	
-
-
 	/**
 	 * This method allows to load the file with the clubs that were created before.
 	 * @return A list with the available clubs or if the program is executed by

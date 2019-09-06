@@ -35,6 +35,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	// Relations
 	private ArrayList<Owner> owners;
+	
 
 	// Constructor
 	public Club(String id, String clubName, String dateCreation, String petType) {
@@ -42,62 +43,14 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		this.clubName = clubName;
 		this.dateCreation = dateCreation;
 		this.petType = petType;
-		this.owners = loadOwners();
+		this.owners = new ArrayList<Owner>();
 	}
 
 	public void setOwners(ArrayList<Owner> owners) {
 		this.owners = owners;
 	}
-
-	/**
-	 * Save the owners like serializable objects
-	 */
-	public void saveOwnersOnFile() {
-		ObjectOutputStream oos;
-		ArrayList<Owner> o = new ArrayList<Owner>();
-		File file = new File("OwnersSerializable.dat");
-		try {
-			if (file.length() == 0) {
-				oos = new ObjectOutputStream(new FileOutputStream(file));
-			} else {
-				oos = new MyObjectOutputStream(new FileOutputStream(file, true));
-			}
-
-			for (Owner owner : owners) {
-				o.add(owner);
-			}
-			oos.writeObject(o);
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * This method allows to recover the owners data in a list for the program
-	 * 
-	 * @return
-	 */
-	private ArrayList<Owner> loadOwners() {
-		File file = new File("OwnersSerializable.dat");
-		if (file.exists()) {
-			try {
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				owners = new ArrayList<Owner>();
-				Owner aux;
-				while ((aux = (Owner) ois.readObject()) != null) {
-					owners.add(aux);
-				}
-				ois.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		} else {
-			owners = new ArrayList<Owner>();
-		}
-		return owners;
-	}
+	
+	
 
 	/**
 	 * This method allows turn a String into a Date
@@ -149,7 +102,6 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) {
 		Owner o = new Owner(id, name, lastName, birthDate, favoritePet);
 		owners.add(o);
-		saveOwnersOnFile();
 	}
 
 	public int numberOwners() {
