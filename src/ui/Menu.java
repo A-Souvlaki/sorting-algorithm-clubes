@@ -171,8 +171,12 @@ public class Menu {
 		String birthDate= reader.nextLine();
 		System.out.println("Ingrese su mascota favorita");
 		String favoritePet= reader.nextLine();
-		list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
-		list.write();
+		try {
+			list.searchClub(idClub).registerOwner(id, name, lastName, birthDate, favoritePet);
+		} catch (ElementExistsExcepcion e) {
+			System.out.println(e.getMessage());
+		}
+		list.writeOwners();
 		System.out.println("Se ha agregado un dueño");
 	
 		
@@ -194,9 +198,12 @@ public class Menu {
 		System.out.println("Ingrese el tipo de mascota");
 		String type = reader.nextLine(); 
 		
-		list.searchClub(idClub).searchOwner(idOwner).registerPet(id, petName, petBirthDay, gender, type);
-		
-		
+		try {
+			list.searchClub(idClub).searchOwner(idOwner).registerPet(id, petName, petBirthDay, gender, type);
+		} catch (ElementExistsExcepcion e) {
+			System.out.println(e.getMessage());
+		}
+		list.writeOwners();
 	}
 	
 	public int showSubMenu1() {

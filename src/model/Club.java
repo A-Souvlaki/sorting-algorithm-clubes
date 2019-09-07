@@ -35,7 +35,6 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 
 	// Relations
 	private ArrayList<Owner> owners;
-	
 
 	// Constructor
 	public Club(String id, String clubName, String dateCreation, String petType) {
@@ -49,8 +48,6 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	public void setOwners(ArrayList<Owner> owners) {
 		this.owners = owners;
 	}
-	
-	
 
 	/**
 	 * This method allows turn a String into a Date
@@ -89,19 +86,24 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return owners;
 	}
 
-	public boolean verifyDuplicateOwner(String id) {
-		boolean duplicate = false;
-		for (Owner owner : owners) {
-			if (owner.getId().equalsIgnoreCase(id)) {
-				duplicate = true;
+	public boolean giveOwner( String id ) {
+		boolean found = false;
+		if(owners != null) {
+			for( int i = 0; i < owners.size( ); i++ ){
+				if(owners.get(i).getId().equals(id));
+					found = true;
 			}
 		}
-		return duplicate;
+	   return found;
 	}
 
-	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) {
-		Owner o = new Owner(id, name, lastName, birthDate, favoritePet);
-		owners.add(o);
+	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) throws ElementExistsExcepcion {
+		if(giveOwner(id)) {
+			throw new ElementExistsExcepcion("Hola");
+		}else {
+			Owner o = new Owner(id, name, lastName, birthDate, favoritePet);
+			owners.add(o);
+		}		
 	}
 
 	public int numberOwners() {
@@ -263,7 +265,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return msg;
 
 	}
-	
+
 	public String secuencialSearchByLastName(String clubName) {
 		String msg = "";
 		for (int i = 0; i < owners.size(); i++) {
@@ -334,7 +336,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		}
 		return msg;
 	}
-	
+
 	public String binarySearchByLastName(String lastName) {
 		String msg = "";
 		boolean found = false;

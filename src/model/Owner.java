@@ -39,16 +39,31 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		
 	}
 	
-	/**
-	 * This method allows to recover the owners data in a list for the program
-	 * 
-	 * @return
-	 */
 
+	public void setPets(ArrayList<Pet> pets) {
+		this.pets = pets;
+	}
 	
+	public boolean givePet(String pN) {
+		boolean found = false;
+		if(pets != null) {
+			for (int i = 0; i < pets.size(); i++) {
+				if(pets.get(i).getPetName().equals(pN))
+					found = true;
+			}
+		}
+		return found;
+	}
 
-	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) {
-		pets.add(new Pet(id, petName, petBirthDay, gender, type));
+	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) throws ElementExistsExcepcion {
+		
+		if(givePet(petName)) {
+			throw new ElementExistsExcepcion("Hola2");
+		}else {
+			Pet p = new Pet(id, petName, petBirthDay, gender, type);
+			pets.add(p);
+		}
+		
 	}
 
 	@Override

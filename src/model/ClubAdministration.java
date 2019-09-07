@@ -28,10 +28,85 @@ public class ClubAdministration {
 	public ClubAdministration(String clubFile) throws ElementExistsExcepcion {
 		this.clubFile = clubFile;
 		clubs = loadclubs();
-		save();
+		loadOwners();
+		verifyInvariantOwners();
+		verifyInvariantPets();
 	}
 	
-	public void write() {
+
+/**
+	 * This method allows add random owners to the clubs that have been added to the Management
+	 * @throws ElementExistsExcepcion 
+	 */
+	private void dataDefaultOwners() throws ElementExistsExcepcion {
+		File file = new File("test.CSV");
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			for (int i = 0; i < clubs.size(); i++) {
+				int iterator = 0;
+				do {
+					String lines = br.readLine();
+					String[] write = lines.split(",");
+					clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
+					writeOwners();
+					iterator++;
+				}
+				while(iterator < 2);
+			}
+			br.close();
+		}catch (IOException e) {
+			e.getStackTrace();
+		}
+	}
+	
+
+	private void dataDefaultPets() {
+		BufferedReader br = null;
+		File file = new File("pets.CSV");
+		try {
+			br = new BufferedReader(new FileReader(file)); 
+			for (int i = 0; i < clubs.size(); i++) {
+				for (int j = 0; j < clubs.get(i).getOwners().size(); j++) {
+					int iterator = 0;
+					do {
+						String lines = br.readLine();
+						String[] write = lines.split(",");
+						clubs.get(i).getOwners().get(j).registerPet(write[0], write[1], write[2], write[3], write[4]);
+						writeOwners();
+						iterator++;
+					}
+					while(iterator < 1);
+				}
+			}
+			br.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+		}
+	}
+	
+	private void verifyInvariantOwners() throws ElementExistsExcepcion{
+		for (Club club : clubs) {
+			if(club.getOwners().isEmpty()) { 
+				dataDefaultOwners();
+			}
+		}
+	}
+	
+	private void verifyInvariantPets() {
+		for (Club club : clubs) {
+			for (Owner owner : club.getOwners()) {
+				if(owner.getPets().isEmpty()) {
+					dataDefaultPets();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 	This method allows to recover an owner like a serializable object 
+	 */
+	public void writeOwners() {
 		ObjectOutputStream oos;
 		File file = new File("Prueba.dat");
 		try {
@@ -46,7 +121,11 @@ public class ClubAdministration {
 			// TODO: handle exception
 		}
 	}
-	public void save() {
+	
+	/**
+	 * This method allows to save an owmer like a serializable object
+	 */
+	public void loadOwners() {
 		File file = new File("Prueba.dat");
 		if (file.exists()) {
 			try {
@@ -55,9 +134,6 @@ public class ClubAdministration {
 					int pos = ois.read();
 					ArrayList<Owner> o = (ArrayList<Owner>)ois.readObject();
 					clubs.get(pos).setOwners(o);
-					
-					//System.out.println(pos);
-					System.out.println(clubs.get(i).getOwners().size());
 				}
 				ois.close();
 			}catch (Exception e) { 
@@ -87,6 +163,7 @@ public class ClubAdministration {
 				e.printStackTrace();  
 			}
 		}
+		
 		return nclubs;
 	}
 	/**
