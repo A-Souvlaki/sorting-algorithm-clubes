@@ -86,24 +86,27 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return owners;
 	}
 
-	public boolean giveOwner( String id ) {
+	public boolean giveOwner( String identification ) {
 		boolean found = false;
 		if(owners != null) {
-			for( int i = 0; i < owners.size( ); i++ ){
-				if(owners.get(i).getId().equals(id));
+			for (Owner owner : owners) {
+				String i = owner.getId();
+				if(i.equals(identification)) {
 					found = true;
+				}
 			}
 		}
 	   return found;
 	}
 
 	public void registerOwner(String id, String name, String lastName, String birthDate, String favoritePet) throws ElementExistsExcepcion {
-		if(giveOwner(id)) {
-			throw new ElementExistsExcepcion("Hola");
-		}else {
+		if(giveOwner(id) == false) {
 			Owner o = new Owner(id, name, lastName, birthDate, favoritePet);
 			owners.add(o);
-		}		
+		}else {
+			throw new ElementExistsExcepcion("NO JODA");
+		}
+			
 	}
 
 	public int numberOwners() {

@@ -286,7 +286,10 @@ public class ClubAdministration {
 			}
 		}
 	}
-	
+	//_________________________________________________________________________________________________________//
+	/**
+	 * This method allows to order a club's list by bubble sort
+	 */
 	public void orderClubsByPet() {
 		for (int i = 0; i < clubs.size(); i++) {
 			for (int j = 0; j < clubs.size()-1-i; j++) {
@@ -298,7 +301,10 @@ public class ClubAdministration {
 			}
 		}
 	}
-	
+	//_________________________________________________________________________________________________________//
+	/**
+	 * This method allows to order a club's list by bubble sort
+	 */
 	public void orderClubsByNumberOwners() {
 		for (int i = 0; i < clubs.size(); i++) {
 			for (int j = 0; j < clubs.size()-1-i; j++) {
@@ -310,17 +316,17 @@ public class ClubAdministration {
 			}
 		}
 	}
-	
-	public String secuencialSearchById(String id) {
+	//_________________________________________________________________________________________________________//
+	public String secuencialSearchById(String identification) {
 		String msg = "";
 		for (int i = 0; i < clubs.size(); i++) {
-			if(clubs.get(i).getId().equalsIgnoreCase(id)) {
+			if(identification.equals(clubs.get(i).getId())) {
 				msg += clubs.get(i);
 			}
-		}
+		} 
 		return msg;
 	}
-	
+	//_________________________________________________________________________________________________________//
 	public String secuencialSearchByClubName(String clubName) {
 		String msg = "";
 		for (int i = 0; i < clubs.size(); i++) {
@@ -328,9 +334,9 @@ public class ClubAdministration {
 				msg += clubs.get(i);
 			}
 		}
-		return msg;
-			
+		return msg;	
 	}
+	//_________________________________________________________________________________________________________//
 	public String secuencialSearchByClubDate(String date) {
 		String msg = "";
 		for (int i = 0; i < clubs.size(); i++) {
@@ -340,6 +346,7 @@ public class ClubAdministration {
 		}
 		return msg;
 	}
+	//_________________________________________________________________________________________________________//
 	public String secuencialSearchByPet(String pet) {
 		String msg = "";
 		for (int i = 0; i < clubs.size(); i++) {
@@ -349,6 +356,7 @@ public class ClubAdministration {
 		}
 		return msg;
 	}
+	//_________________________________________________________________________________________________________//
 	
 	public String binarySearchById(String id) {
 		String msg = "";
