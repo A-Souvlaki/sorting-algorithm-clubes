@@ -26,7 +26,7 @@ public class Menu {
 	public Menu() {
 		reader = new Scanner(System.in);
 		try {
-			list = new ClubAdministration("Clubes.CSV");
+			list = new ClubAdministration("Clubes.CSV","Serializable.dat","test.CSV","pets.CSV");
 		} catch (ElementExistsExcepcion e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,6 +155,7 @@ public class Menu {
 		String petType = reader.nextLine();
 
 		list.registerClub(id, clubName, dateCreation, petType);
+		list.saveclubs();
 		System.out.println("Se ha añadido un club");
 
 	}
@@ -176,7 +177,7 @@ public class Menu {
 		} catch (ElementExistsExcepcion e) {
 			System.out.println(e.getMessage());
 		}
-		list.writeOwners();
+		list.writeOwners("Serializable.dat");
 		System.out.println("Se ha agregado un dueño");
 	
 		
@@ -203,7 +204,7 @@ public class Menu {
 		} catch (ElementExistsExcepcion e) {
 			System.out.println(e.getMessage());
 		}
-		list.writeOwners();
+		list.writeOwners("Serializable.dat");
 	}
 	
 	public int showSubMenu1() {

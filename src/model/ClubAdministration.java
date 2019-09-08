@@ -21,41 +21,57 @@ public class ClubAdministration {
 	private ArrayList<Club> clubs;
 
 	private String clubFile;
+	private String serializableFile;
+	private String loadOwners;
+	private String loadPets;
 	
 	/*
 	 * Constructor
 	 */
-	public ClubAdministration(String clubFile) throws ElementExistsExcepcion {
+	public ClubAdministration(String clubFile,String serilizableFile,String loadOwners,String loadPets) throws ElementExistsExcepcion {
 		this.clubFile = clubFile;
+		this.serializableFile = serilizableFile;
+		this.loadOwners = loadOwners;
+		this.loadPets = loadPets;
 		clubs = loadclubs();
-		loadOwners();
+		loadOwners(serilizableFile);
 		verifyInvariantOwners();
 		verifyInvariantPets();
 	}
-	
+	//_________________________________________________________________________________________________________//
+	public ArrayList<Club> getClubs() {
+		return clubs;
+	}
 
-/**
+	//_________________________________________________________________________________________________________//
+	/*
+	 * The next methods allows the I/O from files and works if you don't touch them, so be careful
+	 */
+	//_________________________________________________________________________________________________________//
+	/**
 	 * This method allows add random owners to the clubs that have been added to the Management
 	 * @throws ElementExistsExcepcion 
 	 */
 	private void dataDefaultOwners() throws ElementExistsExcepcion {
 		File file = new File("test.CSV");
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			for (int i = 0; i < clubs.size(); i++) {
-				int iterator = 0;
-				do {
-					String lines = br.readLine();
-					String[] write = lines.split(",");
-					clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
-					writeOwners();
-					iterator++;
+		if(file.exists()) {
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				for (int i = 0; i < clubs.size(); i++) {
+					int iterator = 0;
+					do {
+						String lines = br.readLine();
+						String[] write = lines.split(",");
+						clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
+						writeOwners(serializableFile);
+						iterator++;
+					}
+					while(iterator < 2);
 				}
-				while(iterator < 2);
+				br.close();
+			}catch (IOException e) {
+				e.getStackTrace();
 			}
-			br.close();
-		}catch (IOException e) {
-			e.getStackTrace();
 		}
 	}
 	
@@ -63,26 +79,28 @@ public class ClubAdministration {
 	private void dataDefaultPets() {
 		BufferedReader br = null;
 		File file = new File("pets.CSV");
-		try {
-			br = new BufferedReader(new FileReader(file)); 
-			for (int i = 0; i < clubs.size(); i++) {
-				for (int j = 0; j < clubs.get(i).getOwners().size(); j++) {
-					int iterator = 0;
-					do {
-						String lines = br.readLine();
-						String[] write = lines.split(",");
-						clubs.get(i).getOwners().get(j).registerPet(write[0], write[1], write[2], write[3], write[4]);
-						writeOwners();
-						iterator++;
+		if(file.exists()) {
+			try {
+				br = new BufferedReader(new FileReader(file)); 
+				for (int i = 0; i < clubs.size(); i++) {
+					for (int j = 0; j < clubs.get(i).getOwners().size(); j++) {
+						int iterator = 0;
+						do {
+							String lines = br.readLine();
+							String[] write = lines.split(",");
+							clubs.get(i).getOwners().get(j).registerPet(write[0], write[1], write[2], write[3], write[4]);
+							writeOwners(serializableFile);
+							iterator++;
+						}
+						while(iterator < 1);
 					}
-					while(iterator < 1);
 				}
+				br.close();
+			}catch (Exception e) {
+				// TODO: handle exception
 			}
-			br.close();
-		}catch (Exception e) {
-			// TODO: handle exception
-		}finally {
 		}
+		
 	}
 	
 	private void verifyInvariantOwners() throws ElementExistsExcepcion{
@@ -106,9 +124,9 @@ public class ClubAdministration {
 	/**
 	 * 	This method allows to recover an owner like a serializable object 
 	 */
-	public void writeOwners() {
+	public void writeOwners(String f) {
 		ObjectOutputStream oos;
-		File file = new File("Prueba.dat");
+		File file = new File(f);
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(file));
 		
@@ -125,8 +143,8 @@ public class ClubAdministration {
 	/**
 	 * This method allows to save an owmer like a serializable object
 	 */
-	public void loadOwners() {
-		File file = new File("Prueba.dat");
+	public void loadOwners(String f) {
+		File file = new File(f);
 		if (file.exists()) {
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
@@ -150,7 +168,7 @@ public class ClubAdministration {
 	private ArrayList<Club> loadclubs() {
 		ArrayList<Club> nclubs = new ArrayList<Club>(); 
 		File file = new File(clubFile);
-		if (file.isFile()) { // Verify if it is a file
+		if (file.exists()) { // Verify if it is a file
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(file));// read the file 
 				String lines;
@@ -162,6 +180,8 @@ public class ClubAdministration {
 			} catch (IOException e) {
 				e.printStackTrace();  
 			}
+		}else {
+			nclubs = new ArrayList<Club>();
 		}
 		
 		return nclubs;
@@ -184,8 +204,15 @@ public class ClubAdministration {
 			e.printStackTrace();
 		}
 	}
+	
+	//_________________________________________________________________________________________________________//
+	/*
+	 * Please read the pre-conditions of every method.
+	 */
+	//_________________________________________________________________________________________________________//
 	/**
 	 * This method allows to create a club
+	 * Pre: The club's list must be not null
 	 * @param id The club's id. This id must will not repeated between the clubs list
 	 * @param clubName The club's name
 	 * @param dateCreation The club's creation date
@@ -193,11 +220,11 @@ public class ClubAdministration {
 	 */
 	public void registerClub(String id, String clubName, String dateCreation, String petType) {
 		clubs.add(new Club(id,clubName,dateCreation,petType));
-		saveclubs();
 	}
-	
+	//_________________________________________________________________________________________________________//
 	/**
-	 * This method allows to find a club by its id
+	 * This method allows to find a club by means of its "id"
+	 * Pre: The club's list must be not null
 	 * @param id the id's club
 	 * @return A Club
 	 */
@@ -209,10 +236,10 @@ public class ClubAdministration {
 				searched = clubs.get(i);
 				close = false;
 			}
-				 
 		}
 		return searched;
 	}
+	//_________________________________________________________________________________________________________//
 	/**
 	 * This method allows to order a club's list by bubble sort
 	 */
@@ -227,6 +254,7 @@ public class ClubAdministration {
 			}
 		}
 	}
+	//_________________________________________________________________________________________________________//
 	/**
 	 * This method allows to order a club's list by selection sort
 	 */
@@ -245,6 +273,7 @@ public class ClubAdministration {
 			clubs.set(index, temp);
 		}
 	}
+	//_________________________________________________________________________________________________________//
 	/**
 	 * This method allows to order a club's list by insertion sort
 	 */
@@ -398,6 +427,8 @@ public class ClubAdministration {
 		}
 		return msg;	
 	}
+	
+	
 	
 		
 	public String paint() {

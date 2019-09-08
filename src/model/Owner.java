@@ -334,6 +334,16 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		}
 		return msg;
 	}
+	
+	public void deletePet(String id) {
+		boolean close = true;
+		for (int i = 0; i < pets.size() && close; i++) {
+			if(pets.get(i).getId().equals(id)) {
+				pets.remove(i);
+				close = false;
+			}	
+		}
+	}
 
 	public String paint() {
 		String msg = "";

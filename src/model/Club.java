@@ -396,6 +396,16 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		}
 		return msg;
 	}
+	
+	public void deleteOwner(String id) {
+		boolean close = true;
+		for (int i = 0; i < owners.size() && close; i++) {
+			if(owners.get(i).getId().equals(id)) {
+				owners.remove(i);
+				close = false;
+			}	
+		}
+	}
 
 	public String paint() {
 		String msg = "";
