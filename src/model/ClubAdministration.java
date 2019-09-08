@@ -436,8 +436,6 @@ public class ClubAdministration {
 		return msg;	
 	}
 	
-	
-	
 		
 	public String paint() {
 		String msg = "";

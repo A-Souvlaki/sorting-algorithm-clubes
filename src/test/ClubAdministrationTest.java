@@ -214,13 +214,14 @@ class ClubAdministrationTest {
 
 		list.getClubs().get(4).registerOwner("b", "Dueño de Prueba", "x", "x", "x");
 	}
+
 	private void setupScenary17() throws ElementExistsExcepcion {
 		list = new ClubAdministration("ClubesTest.txt", "SerializableTest.dat", "OwnersTest.CSV", "PetsTest.CSV");
-		list.getClubs().add(new Club("123456789", "Club de Prueba", "16/05/2019", "Dinosaurios"));
-		list.getClubs().add(new Club("789878787", "Club de Prueba", "16/05/2019", "Dinosaurios"));
-		list.getClubs().add(new Club("896512345", "Club de Prueba", "16/05/2019", "Dinosaurios"));
-		list.getClubs().add(new Club("998754655", "Club de Prueba", "16/05/2019", "Dinosaurios"));
-		list.getClubs().add(new Club("132143244", "Club de Prueba", "16/05/2019", "Dinosaurios"));
+		list.getClubs().add(new Club("123456789", "Club de PruebaA", "16/01/2019", "DinosauriosA"));
+		list.getClubs().add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		list.getClubs().add(new Club("896512345", "Club de PruebaC", "16/03/2019", "DinosauriosC"));
+		list.getClubs().add(new Club("998754655", "Club de PruebaD", "16/04/2019", "DinosauriosD"));
+		list.getClubs().add(new Club("132143244", "Club de PruebaE", "16/05/2019", "DinosauriosE"));
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -533,22 +534,154 @@ class ClubAdministrationTest {
 		sort.get(1).registerOwner("b", "Dueño de Prueba", "x", "x", "x");
 
 		sort.get(0).registerOwner("b", "Dueño de Prueba", "x", "x", "x");
-	
 
 		setupScenary16();
 		list.orderClubsByNumberOwners();
 		assertEquals(sort.toString(), list.getClubs().toString());
 	}
-	
-	
-	
+
 	// _________________________________________________________________________________________________________//
 	@Test
-	void secuencialSearchById() throws ElementExistsExcepcion {
+	void secuencialSearchByIdCase1() throws ElementExistsExcepcion {
 		ArrayList<Club> sort = new ArrayList<Club>();
-		sort.add(new Club("789878787", "Club de Prueba", "16/05/2019", "Dinosaurios"));
-		setupScenary1();
-		assertEquals(sort.get(0).toString(),list.secuencialSearchById("789878787"));
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.secuencialSearchById("789878787");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByIdCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.secuencialSearchById("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByIClubNameCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.secuencialSearchByClubName("Club de pruebaB");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByClubNameCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.secuencialSearchByClubName("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByIClubDateCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.secuencialSearchByClubDate("16/02/2019");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByClubDateCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.secuencialSearchByClubDate("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByPetCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.secuencialSearchByPet("DinosauriosB");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void secuencialSearchByPetbDateCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.secuencialSearchByPet("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByIdCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.binarySearchById("789878787");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByIdCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.binarySearchById("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByClubNameCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.binarySearchByClubName("Club de PruebaB");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByClubNameCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.binarySearchByClubName("78dre5465r");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByClubDateCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.binarySearchByClubDate("16/02/2019");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByClubDateCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.binarySearchByClubDate("16/05/2004");
+		assertEquals("", msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByPetCase1() throws ElementExistsExcepcion {
+		ArrayList<Club> sort = new ArrayList<Club>();
+		sort.add(new Club("789878787", "Club de PruebaB", "16/02/2019", "DinosauriosB"));
+		setupScenary17();
+		String msg = list.binarySearchByPet("DinosauriosB");
+		assertEquals(sort.get(0).toString(), msg);
+	}
+
+	// _________________________________________________________________________________________________________//
+	@Test
+	void binarySearchByPetCase2() throws ElementExistsExcepcion {
+		setupScenary17();
+		String msg = list.binarySearchByPet("78dre5465r");
+		assertEquals("", msg);
 	}
 
 }
