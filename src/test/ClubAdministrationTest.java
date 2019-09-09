@@ -553,7 +553,7 @@ class ClubAdministrationTest {
 	void secuencialSearchByIdCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.secuencialSearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -571,7 +571,7 @@ class ClubAdministrationTest {
 	void secuencialSearchByClubNameCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.secuencialSearchByClubName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -589,7 +589,7 @@ class ClubAdministrationTest {
 	void secuencialSearchByClubDateCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.secuencialSearchByClubDate("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -607,7 +607,7 @@ class ClubAdministrationTest {
 	void secuencialSearchByPetbDateCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.secuencialSearchByPet("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -625,7 +625,7 @@ class ClubAdministrationTest {
 	void binarySearchByIdCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.binarySearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -643,7 +643,7 @@ class ClubAdministrationTest {
 	void binarySearchByClubNameCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.binarySearchByClubName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -661,7 +661,7 @@ class ClubAdministrationTest {
 	void binarySearchByClubDateCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.binarySearchByClubDate("16/05/2004");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -679,7 +679,7 @@ class ClubAdministrationTest {
 	void binarySearchByPetCase2() throws ElementExistsExcepcion {
 		setupScenary17();
 		String msg = list.binarySearchByPet("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun club con los datos especificados", msg);
 	}
 
 }

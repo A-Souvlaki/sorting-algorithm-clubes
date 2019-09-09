@@ -18,7 +18,7 @@ import java.util.Date;
 public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner> {  
 
 	/**
-	 * 
+	 * Attributtes
 	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
@@ -26,9 +26,9 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	private String lastName;
 	private String birthDate;
 	private String favoritePet;
-
+	//Relations
 	private ArrayList<Pet> pets;
-
+	//Constructor
 	public Owner(String id, String name, String lastName, String birthDate, String favoritePet) {
 		this.id = id;
 		this.name = name;
@@ -39,11 +39,11 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		
 	}
 	
-
+	// _________________________________________________________________________________________________________//
 	public void setPets(ArrayList<Pet> pets) {
 		this.pets = pets;
 	}
-	
+	// _________________________________________________________________________________________________________//
 	public boolean givePet(String pN) {
 		boolean found = false;
 		if(pets != null) {
@@ -56,7 +56,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		}
 		return found;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) throws ElementExistsExcepcion {
 		
 		if(givePet(petName) == false) {
@@ -67,7 +67,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		}
 		
 	}
-
+	// _________________________________________________________________________________________________________//
 	@Override
 	public String toString() {
 		return "Owner" + "| Numero de mascotas =" + numberPets()+" |id=" + String.format("%1$-13s", id) + "| name=" + String.format("%1$-13s", name) + "| lastName="
@@ -102,21 +102,21 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	public int numberPets() {
 		return pets.size();
 	}
-
+	// _________________________________________________________________________________________________________//
 	@Override
 	public int compareTo(Owner o) {
 		return id.compareTo(o.getId());
 	}
-
+	// _________________________________________________________________________________________________________//
 	@Override
 	public int compare(Owner o1, Owner o2) {
 		return o1.getName().compareTo(o2.getName());
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByLastName(Owner o) {
 		return lastName.compareTo(o.getLastName());
 	}
-
+	// _________________________________________________________________________________________________________//
 	/**
 	 * This method allows turn a String into a Date
 	 * 
@@ -133,35 +133,35 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		}
 		return date;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByDate(Owner o) {
 		return formatDate(birthDate).compareTo(formatDate(o.getBirthDate()));
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByPet(Owner o) {
 		return favoritePet.compareTo(o.getFavoritePet());
 	}
-	
+	// _________________________________________________________________________________________________________//
 	public int compareByIdBS(String o) {
 		return id.compareTo(o);
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByNameBS(String o) {
 		return name.compareTo(o);
 	}
-	
+	// _________________________________________________________________________________________________________//
 	public int compareByLastNameBS(String o) {
 		return lastName.compareTo(o);
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByDateBS(String o) {
 		return formatDate(birthDate).compareTo(formatDate(o));
 	}
-
+	// _________________________________________________________________________________________________________//
 	public int compareByPetBS(String o) {
 		return favoritePet.compareTo(o);
 	}
-
+	// _________________________________________________________________________________________________________//
 	public void orderPetsById() {
 		for (int i = 0; i < pets.size(); i++) {
 			for (int j = 0; j < pets.size() - 1 - i; j++) {
@@ -173,7 +173,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 		}
 	}
-
+	// _________________________________________________________________________________________________________//
 	public void orderPetsByName() {
 		for (int i = 0; i < pets.size() - 1; i++) {
 			Pet minor = pets.get(i);
@@ -191,7 +191,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			pets.set(index, temp);
 		}
 	}
-
+	// _________________________________________________________________________________________________________//
 	public void orderPetsByDate() {
 		for (int i = 1; i < pets.size(); i++) {
 			for (int j = i; j > 0 && pets.get(j).compareByDate(pets.get(j - 1)) < 0; j--) {
@@ -201,7 +201,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 		}
 	}
-
+	// _________________________________________________________________________________________________________//
 	public void orderPetsByType() {
 		for (int i = 0; i < pets.size(); i++) {
 			for (int j = 0; j < pets.size() - 1 - i; j++) {
@@ -213,7 +213,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 		}
 	}
-	
+	// _________________________________________________________________________________________________________//
 	public String secuencialSearchById(String id) {
 		String msg = "";
 		for (int i = 0; i < pets.size(); i++) {
@@ -221,9 +221,12 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 				msg += pets.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String secuencialSearchByName(String name) {
 		String msg = "";
 		for (int i = 0; i < pets.size(); i++) {
@@ -231,11 +234,13 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 				msg += pets.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 
 	}
-	
-
+	// _________________________________________________________________________________________________________//
 	public String secuencialSearchByDate(String date) {
 		String msg = "";
 		for (int i = 0; i < pets.size(); i++) {
@@ -243,9 +248,12 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 				msg += pets.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String secuencialSearchByPet(String pet) {
 		String msg = "";
 		for (int i = 0; i < pets.size(); i++) {
@@ -253,9 +261,12 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 				msg += pets.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String binarySearchById(String id) {
 		String msg = "";
 		boolean found = false;
@@ -273,9 +284,12 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String binarySearchByName(String name) {
 		String msg = "";
 		boolean found = false;
@@ -293,10 +307,13 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
 	
-
+	// _________________________________________________________________________________________________________//
 	public String binarySearchByDate(String date) {
 		String msg = "";
 		boolean found = false;
@@ -314,9 +331,12 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
 		String msg = "";
 		boolean found = false;
@@ -334,29 +354,44 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ninguna mascota con los datos especificados";
+		}
 		return msg;
 	}
-	
-	public void deletePetById(String identification) {
+	// _________________________________________________________________________________________________________//
+	public String deletePetById(String identification) {
+		String msg = "";
 		boolean close = true;
 		for (int i = 0; i < pets.size() && close; i++) {
 			if(pets.get(i).getId().equals(identification)) {
 				pets.remove(i);
+				msg += "Se ha elminado una mascota";
 				close = false;
 			}	
 		}
+		if(msg.equals("")) {
+			msg = "No se ha eliminado ninguna mascota, quiza no exista o te quieres pasar de listo conmigo mushasito :)";
+		}
+		return msg;
 	}
-	
-	public void deletePetByName(String petN) {
+	// _________________________________________________________________________________________________________//
+	public String deletePetByName(String petN) {
+		String msg = "";
 		boolean close = true;
 		for (int i = 0; i < pets.size() && close; i++) {
 			if(pets.get(i).getPetName().equals(petN)) {
 				pets.remove(i);
+				msg += "Se ha elminado una mascota";
 				close = false;
 			}	
 		}
+		if(msg.equals("")) {
+			msg = "No se ha eliminado ninguna mascota, quiza no exista o te quieres pasar de listo conmigo mushasito :)";
+		}
+		return msg;
 	}
-
+	// _________________________________________________________________________________________________________//
 	public String paint() {
 		String msg = "";
 		for (int i = 0; i < pets.size(); i++) {

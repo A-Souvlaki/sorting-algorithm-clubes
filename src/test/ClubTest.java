@@ -594,7 +594,7 @@ class ClubTest {
 		
 		setupScenary1();
 		String msg = club.secuencialSearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -611,7 +611,7 @@ class ClubTest {
 	void secuencialSearchByNameCase2()  {
 		setupScenary1();
 		String msg = club.secuencialSearchByName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -629,7 +629,7 @@ class ClubTest {
 	void secuencialSearchByLastNameCase2()  {
 		setupScenary1();
 		String msg = club.secuencialSearchByLastName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -646,7 +646,7 @@ class ClubTest {
 	void secuencialSearchByOwnerDateCase2()  {
 		setupScenary1();
 		String msg = club.secuencialSearchByOwnerDate("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -663,7 +663,7 @@ class ClubTest {
 	void secuencialSearchByPetbDateCase2()  {
 		setupScenary1();
 		String msg = club.secuencialSearchByPet("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -681,7 +681,7 @@ class ClubTest {
 	void binarySearchByIdCase2()  {
 		setupScenary1();
 		String msg = club.binarySearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -698,7 +698,7 @@ class ClubTest {
 	void binarySearchByNameCase2()  {
 		setupScenary1();
 		String msg = club.binarySearchByName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -716,7 +716,7 @@ class ClubTest {
 	void binarySearchByLastNameCase2() {
 		setupScenary1();
 		String msg = club.binarySearchByLastName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -733,7 +733,7 @@ class ClubTest {
 	void binarySearchByOwnerDateCase2()  {
 		setupScenary1();
 		String msg = club.binarySearchByDate("16/05/2004");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -750,7 +750,7 @@ class ClubTest {
 	void binarySearchByPetCase2()  {
 		setupScenary1();
 		String msg = club.binarySearchByPet("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
 	}
 
 }

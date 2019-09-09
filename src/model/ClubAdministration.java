@@ -37,8 +37,8 @@ public class ClubAdministration {
 		// Method by the persinstence
 		clubs = loadclubs();
 		loadOwners(serilizableFile);
-		verifyInvariantOwners(loadOwners);
-		verifyInvariantPets(loadPets);
+		verifyInvariantOwners(loadOwners,loadPets);
+		
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -122,26 +122,11 @@ public class ClubAdministration {
 	 * @param data The file from the data will be load
 	 * @throws ElementExistsExcepcion
 	 */
-	private void verifyInvariantOwners(String data) throws ElementExistsExcepcion {
+	private void verifyInvariantOwners(String dataO, String dataP) throws ElementExistsExcepcion {
 		for (Club club : clubs) {
-			if (club.getOwners().isEmpty()) {
-				dataDefaultOwners(data);
-			}
-		}
-	}
-
-	// _________________________________________________________________________________________________________//
-	/**
-	 * This method allows to load a default pet's list one time
-	 * 
-	 * @param data The file from the data will be load
-	 */
-	private void verifyInvariantPets(String data) {
-		for (Club club : clubs) {
-			for (Owner owner : club.getOwners()) {
-				if (owner.getPets().isEmpty()) {
-					dataDefaultPets(data);
-				}
+			if (club.getOwners().isEmpty()) { 
+				dataDefaultOwners(dataO);
+				dataDefaultPets(dataP);
 			}
 		}
 	}
@@ -244,11 +229,10 @@ public class ClubAdministration {
 	/**
 	 * This method allows to create a club Pre: The club's list must be not null
 	 * 
-	 * @param id           The club's id. This id must will not repeated between the
-	 *                     clubs list
-	 * @param clubName     The club's name
+	 * @param id The club's id. This id must will not repeated between the clubs list
+	 * @param clubName The club's name
 	 * @param dateCreation The club's creation date
-	 * @param petType      The club's type
+	 * @param petTypeThe club's type
 	 */
 	public void registerClub(String id, String clubName, String dateCreation, String petType) {
 		clubs.add(new Club(id, clubName, dateCreation, petType));
@@ -258,7 +242,6 @@ public class ClubAdministration {
 	/**
 	 * This method allows to find a club by means of its "id" Pre: The club's list
 	 * must be not null
-	 * 
 	 * @param id the id's club
 	 * @return A Club
 	 */
@@ -364,6 +347,9 @@ public class ClubAdministration {
 				msg += clubs.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
+		}
 		return msg;
 	}
 
@@ -374,6 +360,9 @@ public class ClubAdministration {
 			if (clubs.get(i).getClubName().equalsIgnoreCase(clubName)) {
 				msg += clubs.get(i);
 			}
+		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
 		}
 		return msg;
 	}
@@ -386,6 +375,9 @@ public class ClubAdministration {
 				msg += clubs.get(i);
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
+		}
 		return msg;
 	}
 
@@ -396,6 +388,9 @@ public class ClubAdministration {
 			if (clubs.get(i).getPetType().equalsIgnoreCase(pet)) {
 				msg += clubs.get(i);
 			}
+		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
 		}
 		return msg;
 	}
@@ -411,12 +406,15 @@ public class ClubAdministration {
 			if (clubs.get(middle).compareByIdBS(id) == 0) {
 				found = true;
 				msg += clubs.get(middle);
-			} else if (clubs.get(middle).compareByIdBS(id) > 0) {
+			} else if (clubs.get(middle).compareByIdBS(id) > 0) { 
 				end = middle - 1;
 			} else {
 				start = middle + 1;
 			}
 
+		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
 		}
 		return msg;
 	}
@@ -439,6 +437,9 @@ public class ClubAdministration {
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
+		}
 		return msg;
 	}
 
@@ -459,6 +460,9 @@ public class ClubAdministration {
 				start = middle + 1;
 			}
 
+		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
 		}
 		return msg;
 	}
@@ -481,29 +485,44 @@ public class ClubAdministration {
 			}
 
 		}
+		if(msg.equals("")) {
+			msg = "No se encontro ningun club con los datos especificados";
+		}
 		return msg;
 	}
 
 	// _________________________________________________________________________________________________________//
-	public void deleteClubById(String identification) {
+	public String deleteClubById(String identification) {
+		String msg = "";
 		boolean close = true;
 		for (int i = 0; i < clubs.size() && close; i++) {
 			if (clubs.get(i).getId().equals(identification)) {
 				clubs.remove(i);
+				msg = "Se ha eliminado un club";
 				close = false;
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se ha eliminado ningun club, quiza no exista o te quieres pasar de listo conmigo mushasito :)";
+		}
+		return msg;
 	}
 
 	// _________________________________________________________________________________________________________//
-	public void deleteClubByName(String n) {
+	public String deleteClubByName(String n) {
+		String msg = "";
 		boolean close = true;
 		for (int i = 0; i < clubs.size() && close; i++) {
 			if (clubs.get(i).getClubName().equals(n)) {
 				clubs.remove(i);
+				msg = "Se ha eliminado un club";
 				close = false;
 			}
 		}
+		if(msg.equals("")) {
+			msg = "No se ha eliminado ningun club, quiza no exista o te quieres pasar de listo conmigo mushasito :)";
+		}
+		return msg;
 	}
 
 	// _________________________________________________________________________________________________________//

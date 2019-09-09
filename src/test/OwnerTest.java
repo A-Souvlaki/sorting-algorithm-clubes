@@ -487,7 +487,7 @@ class OwnerTest {
 	void secuencialSearchByIdCase2() {
 		setupScenary1();
 		String msg = owner.secuencialSearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -504,7 +504,7 @@ class OwnerTest {
 	void secuencialSearchByNameCase2() {
 		setupScenary1();
 		String msg = owner.secuencialSearchByName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -521,7 +521,7 @@ class OwnerTest {
 	void secuencialSearchByDateCase2() {
 		setupScenary1();
 		String msg = owner.secuencialSearchByDate("15/04/2004");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 
 	// _________________________________________________________________________________________________________//
@@ -538,7 +538,7 @@ class OwnerTest {
 	void secuencialSearchByTypeCase2() {
 		setupScenary1();
 		String msg = owner.secuencialSearchByPet("15/04/2004");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 	// _________________________________________________________________________________________________________//
 
@@ -555,7 +555,7 @@ class OwnerTest {
 	void binarySearchByIdCase2() {
 		setupScenary1();
 		String msg = owner.binarySearchById("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 	// _________________________________________________________________________________________________________//
 
@@ -572,7 +572,7 @@ class OwnerTest {
 	void binarySearchByNameCase2() {
 		setupScenary1();
 		String msg = owner.binarySearchByName("78dre5465r");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 	// _________________________________________________________________________________________________________//
 
@@ -589,7 +589,7 @@ class OwnerTest {
 	void binarySearchByDateCase2() {
 		setupScenary1();
 		String msg = owner.binarySearchByDate("16/06/2015");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 	
 	// _________________________________________________________________________________________________________//
@@ -607,7 +607,7 @@ class OwnerTest {
 	void binarySearchByTypeCase2() {
 		setupScenary1();
 		String msg = owner.binarySearchByPet("asdasdsad");
-		assertEquals("", msg);
+		assertEquals("No se encontro ninguna mascota con los datos especificados", msg);
 	}
 
 }
