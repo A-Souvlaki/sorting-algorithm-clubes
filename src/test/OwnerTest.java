@@ -42,14 +42,14 @@ class OwnerTest {
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void giveOwnerTestCase1() {
+	void givePetTestCase1() {
 		setupScenary1();
 		assertTrue(owner.givePet("AABCDEF"));
 	}
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void giveOwnerTestCase2() {
+	void givePetTestCase2() {
 		setupScenary1();
 		assertFalse(owner.givePet("984546545"));
 	}

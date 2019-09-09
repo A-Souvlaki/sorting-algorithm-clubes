@@ -660,7 +660,7 @@ class ClubTest {
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void secuencialSearchByPetbDateCase2()  {
+	void secuencialSearchByPetCase2()  {
 		setupScenary1();
 		String msg = club.secuencialSearchByPet("78dre5465r");
 		assertEquals("No se encontro ningun dueño con los datos especificados", msg);
