@@ -47,9 +47,11 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	public boolean givePet(String pN) {
 		boolean found = false;
 		if(pets != null) {
-			for (int i = 0; i < pets.size(); i++) {
-				if(pets.get(i).getPetName().equals(pN))
+			for (Pet pet : pets) {
+				String i = pet.getId();
+				if(pN.equals(i)) {
 					found = true;
+				}
 			}
 		}
 		return found;
@@ -57,11 +59,11 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 
 	public void registerPet(String id, String petName, String petBirthDay, String gender, String type) throws ElementExistsExcepcion {
 		
-		if(givePet(petName)) {
-			throw new ElementExistsExcepcion("Hola2");
-		}else {
+		if(givePet(petName) == false) {
 			Pet p = new Pet(id, petName, petBirthDay, gender, type);
 			pets.add(p);
+		}else {
+			throw new ElementExistsExcepcion("Hola2");
 		}
 		
 	}
@@ -335,10 +337,20 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 		return msg;
 	}
 	
-	public void deletePet(String id) {
+	public void deletePetById(String identification) {
 		boolean close = true;
 		for (int i = 0; i < pets.size() && close; i++) {
-			if(pets.get(i).getId().equals(id)) {
+			if(pets.get(i).getId().equals(identification)) {
+				pets.remove(i);
+				close = false;
+			}	
+		}
+	}
+	
+	public void deletePetByName(String petN) {
+		boolean close = true;
+		for (int i = 0; i < pets.size() && close; i++) {
+			if(pets.get(i).getPetName().equals(petN)) {
 				pets.remove(i);
 				close = false;
 			}	

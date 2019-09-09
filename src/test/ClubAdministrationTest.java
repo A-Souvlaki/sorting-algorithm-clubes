@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-
-import junit.framework.Assert;
 import model.Club;
 import model.ClubAdministration;
 import model.ElementExistsExcepcion;

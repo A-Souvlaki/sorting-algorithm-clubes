@@ -26,9 +26,8 @@ public class Menu {
 	public Menu() {
 		reader = new Scanner(System.in);
 		try {
-			list = new ClubAdministration("Clubes.CSV","Serializable.dat","test.CSV","pets.CSV");
+			list = new ClubAdministration("files\\Clubes.CSV","files\\Serializable.dat","files\\test.CSV","files\\pets.CSV");
 		} catch (ElementExistsExcepcion e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		systemOperation();
@@ -50,69 +49,48 @@ public class Menu {
 				registerPet();
 				break;
 			case 4:
-				int valSubMenu = showSubMenu1();
-				if(valSubMenu == 1) {
-					list.orderClubsById();
-					paint();
-				}else if(valSubMenu == 2) {
-					list.orderClubsByClubName();
-					paint();
-				}else if(valSubMenu == 3) {
-					list.orderClubsByDate();
-					paint();
-				}else if(valSubMenu == 4) {
-					list.orderClubsByPet();
-					paint();
-				}else if(valSubMenu == 5) {
-					list.orderClubsByNumberOwners();
-					paint();
-				}
+				orderClubs();
 				break;
 			case 5:
-				System.out.println("Ingrese la id del club");
-				String idClub = reader.nextLine();
-				int valSubMenu2 = showSubMenu2();
-				if(valSubMenu2 == 1) {
-					list.searchClub(idClub).orderOwnersById();
-					paintOwners(idClub);
-				}else if(valSubMenu2 == 2) {
-					list.searchClub(idClub).orderOwnersByName();
-					paintOwners(idClub);
-				}else if(valSubMenu2 == 3) {
-					list.searchClub(idClub).orderOwnersByLastName();
-					paintOwners(idClub);
-				}else if(valSubMenu2 == 4) {
-					list.searchClub(idClub).orderOwnersByDate();
-					paintOwners(idClub);
-				}else if(valSubMenu2 == 5) {
-					list.searchClub(idClub).orderOwnersByPet();
-					paintOwners(idClub);
-				}else if(valSubMenu2 == 6) {
-					list.searchClub(idClub).orderOwnersByPet();
-					paintOwners(idClub);
-				}		
+				orderOwners();		
 				break;
 			case 6:
-				System.out.println("Ingrese la id del club");
-				String idClubn = reader.nextLine();
-				System.out.println("Ingrese el id del dueño buscado");
-				String idOwner = reader.nextLine();
-				int valSubMenu3 = showSubMenu3();
-				if(valSubMenu3 == 1) {
-					list.searchClub(idClubn).searchOwner(idOwner).orderPetsById();
-					paintPets(idClubn, idOwner);
-				}else if(valSubMenu3  == 2) {
-					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByName();
-					paintPets(idClubn, idOwner);
-				}else if(valSubMenu3 == 3) {
-					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByDate();
-					paintPets(idClubn, idOwner);
-				}else if(valSubMenu3 == 4) {
-					list.searchClub(idClubn).searchOwner(idOwner).orderPetsByType();
-					paintPets(idClubn, idOwner);
-				}
+				orderPets();
 				break;
 			case 7:
+				orderByNumberOwners();
+				break;
+			case 8:
+				orderByNumberPets();
+				break;
+			case 9:
+				System.out.println("Ingrese lo que desea buscar: ");
+				String data7 = reader.nextLine();
+				searchClubs(data7);
+				break;
+			case 10:
+				System.out.println("Ingrese lo que desea buscar: ");
+				String data8 = reader.nextLine();
+				searchOwners(data8);
+				break;
+			case 11:
+				System.out.println("Ingrese lo que desea buscar: ");
+				String data9 = reader.nextLine();
+				searchPets(data9);
+				break;
+			case 12:
+				deleteClub();
+				list.saveclubs();
+				break;
+			case 13:
+				deleteOwner();
+				list.writeOwners("files\\Serializable.dat");
+				break;
+			case 14:
+				deletePet();
+				list.writeOwners("files\\Serializable.dat");
+				break;
+			case 15:
 				close = true;
 				break;
 			default:
@@ -131,16 +109,30 @@ public class Menu {
 		System.out.println("4. Mostrar lista ordenada de clubes");
 		System.out.println("5. Mostrar lista ordenada de dueños");
 		System.out.println("6. Mostrar lista ordenada de mascotas");
-		System.out.println("7. Salir ");
+		System.out.println("7. Mostrar lista ordenada de clubes segun numero de dueños");
+		System.out.println("8. Mostrar lista ordenada de dueños segun numero de mascotas");
+		System.out.println("9. Buscar un club");
+		System.out.println("10. Buscar un dueño");
+		System.out.println("11. Buscar una mascota");
+		System.out.println("12. Eliminar un Club");
+		System.out.println("13. Eliminar un Dueño");
+		System.out.println("14. Eliminar una Mascota");
+		System.out.println("15. Salir ");
 		int value = 0;
 		//Here I catch the exceptions
 		try {
 			value = reader.nextInt();
 			reader.nextLine();
+			if(value <= -1 || value > 15) {
+				throw new OutOfRangeExcepcion("\"Por favor digite una opcion valida :)...O tu windows se cerrara\"");
+			}
 		}catch(InputMismatchException e) {
+			System.out.println("Por favor digite una opcion valida :)...O tu windows se cerrara");
 			reader.nextLine();
+			
+		} catch (OutOfRangeExcepcion e) {
+			System.out.println(e.getMessage());
 		}
-		
 		return value;
 	}
 	
@@ -177,7 +169,7 @@ public class Menu {
 		} catch (ElementExistsExcepcion e) {
 			System.out.println(e.getMessage());
 		}
-		list.writeOwners("Serializable.dat");
+		list.writeOwners("files\\Serializable.dat");
 		System.out.println("Se ha agregado un dueño");
 	
 		
@@ -204,57 +196,361 @@ public class Menu {
 		} catch (ElementExistsExcepcion e) {
 			System.out.println(e.getMessage());
 		}
-		list.writeOwners("Serializable.dat");
+		list.writeOwners("files\\Serializable.dat");
+		System.out.println("Se ha agregado una mascota");
 	}
 	
 	public int showSubMenu1() {
-		System.out.println("1. Ver listado ordenado por id ");
-		System.out.println("2. Ver listado ordenado por nombres de los clubes");
-		System.out.println("3. Ver listado ordenado por fecha de creacion");
-		System.out.println("4. Ver listado ordenado por tipo de mascota");
-		System.out.println("5. Ver listado ordenado por numero de dueños");
+		System.out.println("1. Ver listado ordenado/Buscar por id ");
+		System.out.println("2. Ver listado ordenado/Buscar por nombres de los clubes");
+		System.out.println("3. Ver listado ordenado/Buscar por fecha de creacion");
+		System.out.println("4. Ver listado ordenado/Buscar por tipo de mascota");
 		int option = 0;
 		try {
 			option = reader.nextInt();
 			reader.nextLine();
-		}catch (Exception e) {
-			// TODO: handle exception
-		} 
+			if(option <= -1 ||option > 5) {
+				throw new OutOfRangeExcepcion("Has ingresado un valor que no corresponde a los permitidos por el menu");
+			}
+		} catch (InputMismatchException e) {
+			System.out.println("Has digitado un valor invalido, por favor intenta de nuevo");
+		} catch(OutOfRangeExcepcion e) {
+			System.out.println(e.getMessage());
+		}
 		return option;
 	}
 	
 	public int showSubMenu2() {
-		System.out.println("1. Ver listado ordenado por id ");
-		System.out.println("2. Ver listado ordenado por nombres de los dueños");
-		System.out.println("3. Ver listado ordenado por apellidos de los dueños");
-		System.out.println("4. Ver listado ordenado por fecha de nacimiento");
-		System.out.println("5. Ver listado ordenado por tipo de mascota");
-		System.out.println("6. Ver listado ordenado numero de mascotas");
+		System.out.println("1. Ver listado ordenado/Buscar por id ");
+		System.out.println("2. Ver listado ordenado/Buscar por nombres de los dueños");
+		System.out.println("3. Ver listado ordenado/Buscar por apellidos de los dueños");
+		System.out.println("4. Ver listado ordenado/Buscar por fecha de nacimiento");
+		System.out.println("5. Ver listado ordenado/Buscar por tipo de mascota");
 		int option = 0;
 		try {
 			option = reader.nextInt();
 			reader.nextLine();
-		}catch (Exception e) {
-			// TODO: handle exception
-		} 
+			if(option <= -1 ||option > 6) {
+				throw new OutOfRangeExcepcion("Has ingresado un valor que no corresponde a los permitidos por el menu");
+			}
+			
+		}catch (InputMismatchException e) {
+			System.out.println("Has digitado un valor invalido, por favor intenta de nuevo");
+			menuSystem();
+			
+		}catch(OutOfRangeExcepcion e) {
+			System.out.println(e.getMessage());
+			menuSystem();
+		}
 		return option;
 	}
 	
 	public int showSubMenu3() {
-		System.out.println("1. Ver listado ordenado por id ");
-		System.out.println("2. Ver listado ordenado por nombres de las mascotas");
-		System.out.println("3. Ver listado ordenado por fecha de nacimiento");
-		System.out.println("4. Ver listado ordenado por tipo de mascota");
+		System.out.println("1. Ver listado ordenado por/Buscar id ");
+		System.out.println("2. Ver listado ordenado por/Buscar nombres de las mascotas");
+		System.out.println("3. Ver listado ordenado por/Buscar fecha de nacimiento");
+		System.out.println("4. Ver listado ordenado por/Buscar tipo de mascota");
 		int option = 0;
 		try {
 			option = reader.nextInt();
 			reader.nextLine();
-		}catch (Exception e) {
-			// TODO: handle exception
-		} 
+			if(option <= -1 || option > 4) {
+				throw new OutOfRangeExcepcion("Has ingresado un valor que no corresponde a los permitidos por el menu");
+			}
+		}catch (InputMismatchException e) {
+			System.out.println("Has digitado un valor invalido, por favor intenta de nuevo");
+			menuSystem();
+			
+		}catch(OutOfRangeExcepcion e) {
+			System.out.println(e.getMessage());
+			menuSystem();
+		}
 		return option;
 	}
 	
+	public int showSubMenu4() {
+		System.out.println("Elija como desea eliminar");
+		System.out.println("1. Eliminar por id ");
+		System.out.println("2. Eliminar por nombre");
+		int option = 0;
+		try {
+			option = reader.nextInt();
+			reader.nextLine();
+			if(option <= -1 || option > 2) {
+				throw new OutOfRangeExcepcion("Has ingresado un valor que no corresponde a los permitidos por el menu");
+			}
+		}catch (InputMismatchException e) {
+			System.out.println("Has digitado un valor invalido, por favor intenta de nuevo");
+			menuSystem();
+			
+		}catch(OutOfRangeExcepcion e) {
+			System.out.println(e.getMessage());
+			menuSystem();
+		}
+		return option;
+	}
+	
+	public void deleteClub() {
+		int value = showSubMenu4();
+		if(value == 1) {
+			System.out.println("Ingrese la identificacion del club que desea eliminar");
+			String identification = reader.nextLine();
+			list.deleteClubById(identification);
+		}else {
+			System.out.println("Ingrese el nombre del club que desea eliminar");
+			String name = reader.nextLine();
+			list.deleteClubByName(name);;
+		}
+	}
+	
+	public void deleteOwner() {
+		int value = showSubMenu4();
+		if(value == 1) {
+			System.out.println("Ingrese la identificacion de un club");
+			String identification = reader.nextLine();
+			System.out.println("Ingrese la identificacion del dueño que desea eliminar");
+			String idOwner = reader.nextLine();
+			list.searchClub(identification).deleteOwnerById(idOwner);
+		}else {
+			System.out.println("Ingrese la identificacion de un club");
+			String identification = reader.nextLine();
+			System.out.println("Ingrese el nombre del dueño que desea eliminar");
+			String nameOwner = reader.nextLine();
+			list.searchClub(identification).deleteOwnerByName(nameOwner);
+		}
+	}
+	
+	public void deletePet() {
+		int value = showSubMenu4();
+		if(value == 1) {
+			System.out.println("Ingrese la identificacion de un club");
+			String identification = reader.nextLine();
+			System.out.println("Ingrese la identificacion de un dueño");
+			String idOwner = reader.nextLine();
+			System.out.println("Ingrese la identificacion de la mascota que desea eliminar");
+			String idPet = reader.nextLine();
+			list.searchClub(identification).searchOwner(idOwner).deletePetById(idPet);
+		}else {
+			System.out.println("Ingrese la identificacion de un club");
+			String identification = reader.nextLine();
+			System.out.println("Ingrese el nombre del dueño que desea eliminar");
+			String idOwner = reader.nextLine();
+			System.out.println("Ingrese el nombre de la mascota que desea eliminar");
+			String namePet = reader.nextLine();
+			list.searchClub(identification).searchOwner(idOwner).deletePetByName(namePet);
+		}
+	}
+	
+	public void orderByNumberOwners() {
+		list.orderClubsByNumberOwners();
+		paint();
+	}
+	
+	public void orderByNumberPets() {
+		System.out.println("Ingrese la identificacion del club que desea ordenar");
+		String idClub = reader.nextLine();
+		list.searchClub(idClub).orderOwnersByNumberPets();
+		paintOwners(idClub);
+		
+	}
+	
+	public void orderClubs() {
+		int valSubMenu = showSubMenu1();
+		if(valSubMenu == 1) {
+			list.orderClubsById();
+			paint();
+		}else if(valSubMenu == 2) {
+			list.orderClubsByClubName();
+			paint();
+		}else if(valSubMenu == 3) {
+			list.orderClubsByDate();
+			paint();
+		}else if(valSubMenu == 4) {
+			list.orderClubsByPet();
+			paint();
+		}
+		
+	}
+	public void orderOwners() {
+		System.out.println("Ingrese la id del club");
+		String idClub = reader.nextLine();
+		int valSubMenu2 = showSubMenu2();
+		
+		if(valSubMenu2 == 1) {
+			list.searchClub(idClub).orderOwnersById();
+			paintOwners(idClub);
+		}else if(valSubMenu2 == 2) {
+			list.searchClub(idClub).orderOwnersByName();
+			paintOwners(idClub);
+		}else if(valSubMenu2 == 3) {
+			list.searchClub(idClub).orderOwnersByLastName();
+			paintOwners(idClub);
+		}else if(valSubMenu2 == 4) {
+			list.searchClub(idClub).orderOwnersByDate();
+			paintOwners(idClub);
+		}else if(valSubMenu2 == 5) {
+			list.searchClub(idClub).orderOwnersByPet();
+			paintOwners(idClub);
+		}
+	}
+	public void orderPets() {
+		System.out.println("Ingrese la id del club");
+		String idClubn = reader.nextLine();
+		System.out.println("Ingrese el id del dueño buscado");
+		String idOwner = reader.nextLine();
+		int valSubMenu3 = showSubMenu3();
+		if(valSubMenu3 == 1) {
+			list.searchClub(idClubn).searchOwner(idOwner).orderPetsById();
+			paintPets(idClubn, idOwner);
+		}else if(valSubMenu3  == 2) {
+			list.searchClub(idClubn).searchOwner(idOwner).orderPetsByName();
+			paintPets(idClubn, idOwner);
+		}else if(valSubMenu3 == 3) {
+			list.searchClub(idClubn).searchOwner(idOwner).orderPetsByDate();
+			paintPets(idClubn, idOwner);
+		}else if(valSubMenu3 == 4) {
+			list.searchClub(idClubn).searchOwner(idOwner).orderPetsByType();
+			paintPets(idClubn, idOwner);
+		}
+	}
+	
+	public void searchClubs(String data) {
+		int valSubMenu = showSubMenu1();
+		if(valSubMenu == 1) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.secuencialSearchById(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.binarySearchById(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu == 2) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.secuencialSearchByClubName(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+"Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.binarySearchByClubName(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu == 3) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.secuencialSearchByClubDate(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+"Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.binarySearchByClubDate(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu == 4) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.secuencialSearchByPet(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+"Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.binarySearchByPet(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}
+		
+	}
+	public void searchOwners(String data) {
+		System.out.println("Ingrese la id del club");
+		String idClub = reader.nextLine();
+		int valSubMenu2 = showSubMenu2();
+		
+		if(valSubMenu2 == 1) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchById(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).binarySearchById(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu2 == 2) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchByName(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchByName(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu2 == 3) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchByLastName(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).binarySearchByLastName(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu2 == 4) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchByOwnerDate(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).binarySearchByDate(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu2 == 5) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).secuencialSearchByPet(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClub).binarySearchByPet(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}
+	}
+	public void searchPets(String data) {
+		System.out.println("Ingrese la id del club");
+		String idClubn = reader.nextLine();
+		System.out.println("Ingrese el id del dueño buscado");
+		String idOwner = reader.nextLine();
+		int valSubMenu3 = showSubMenu3();
+		if(valSubMenu3 == 1) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).secuencialSearchById(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).binarySearchById(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu3  == 2) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).secuencialSearchByName(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).binarySearchByName(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu3 == 3) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).secuencialSearchByDate(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).binarySearchByDate(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}else if(valSubMenu3 == 4) {
+			long ts1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).secuencialSearchByPet(data));
+			long ts2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda secuencial: " + (ts2-ts1)+" Nanosegundos\n");
+			long tb1 = System.nanoTime();
+			System.out.println(list.searchClub(idClubn).searchOwner(idOwner).binarySearchByPet(data));
+			long tb2 = System.nanoTime();
+			System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+"Nanosegundos\n");
+		}
+	}
 	public void paint() {
 		System.out.println(list.paint());
 	}

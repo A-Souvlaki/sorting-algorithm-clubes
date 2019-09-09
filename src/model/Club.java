@@ -400,10 +400,20 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 		return msg;
 	}
 	
-	public void deleteOwner(String id) {
+	public void deleteOwnerById(String identification) {
 		boolean close = true;
 		for (int i = 0; i < owners.size() && close; i++) {
-			if(owners.get(i).getId().equals(id)) {
+			if(owners.get(i).getId().equals(identification)) {
+				owners.remove(i);
+				close = false;
+			}	
+		}
+	}
+	
+	public void deleteOwnerByName(String ownerName) {
+		boolean close = true;
+		for (int i = 0; i < owners.size() && close; i++) {
+			if(owners.get(i).getName().equals(ownerName)) {
 				owners.remove(i);
 				close = false;
 			}	

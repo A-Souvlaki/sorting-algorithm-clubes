@@ -257,7 +257,7 @@ class ClubTest {
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void compareByClubNameBSCase1() {
+	void compareByNameBSCase1() {
 		setupScenary1();
 		int value = club.compareByNameBS("DSoy un comparador");
 		assertTrue(value < 0);
@@ -265,7 +265,7 @@ class ClubTest {
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void compareByClubNameBSCase2() {
+	void compareByNameBSCase2() {
 		setupScenary1();
 		int value = club.compareByNameBS("ASoy un comparador");
 		assertTrue(value > 0);
@@ -273,7 +273,7 @@ class ClubTest {
 
 	// _________________________________________________________________________________________________________//
 	@Test
-	void compareByClubNameBSCase3() {
+	void compareByNameBSCase3() {
 		setupScenary1();
 		int value = club.compareByNameBS("CSoy un comparador");
 		assertTrue(value == 0);
@@ -328,6 +328,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByIdCase1() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -340,6 +341,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByIdCase2() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -352,6 +354,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByIdCase3() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -364,6 +367,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNameCase1() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -376,6 +380,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNameCase2() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -388,6 +393,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNameCase3() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -400,6 +406,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByLastNameCase1() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -412,6 +419,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByLastNameCase2() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -424,6 +432,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByLastNameCase3() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -436,23 +445,24 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByDateCase1() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
-		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
-
+		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		setupScenary2();
 		club.orderOwnersByDate();
 		assertEquals(owners.toString(), club.getOwners().toString());
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByDateCase2() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
-		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
+		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 
 		setupScenary3();
 		club.orderOwnersByDate();
@@ -460,11 +470,12 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByDateCase3() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
-		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
+		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 
 		setupScenary4();
 		club.orderOwnersByDate();
@@ -472,6 +483,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByPetCase1() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -484,6 +496,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByPetCase2() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -496,6 +509,7 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByPetCase3() {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
@@ -508,11 +522,19 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNumberPetsCase1() throws ElementExistsExcepcion {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
 		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
+		
+		owners.get(0).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ASDS", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ABCD", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ASDS", "Y", "Y", "Y");
 
 		setupScenary5();
 		club.orderOwnersByNumberPets();
@@ -520,11 +542,18 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNumberPetsCase2() throws ElementExistsExcepcion {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
 		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
+		owners.get(0).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ASDS", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ABCD", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ASDS", "Y", "Y", "Y");
 
 		setupScenary6();
 		club.orderOwnersByNumberPets();
@@ -532,11 +561,18 @@ class ClubTest {
 	}
 
 	// _________________________________________________________________________________________________________//
+	@Test
 	void orderOwnersByNumberPetsCase3() throws ElementExistsExcepcion {
 		ArrayList<Owner> owners = new ArrayList<Owner>();
 		owners.add(new Owner("AABCDE", "Dueño A", "Apellido A", "18/05/2001", "Dinosaurio A"));
 		owners.add(new Owner("BABCDE", "Dueño B", "Apellido B", "20/05/2001", "Dinosaurio B"));
 		owners.add(new Owner("CABCDE", "Dueño C", "Apellido C", "19/05/2001", "Dinosaurio C"));
+		owners.get(0).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(1).registerPet("X", "ASDS", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ABCD", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ERSA", "Y", "Y", "Y");
+		owners.get(2).registerPet("X", "ASDS", "Y", "Y", "Y");
 
 		setupScenary7();
 		club.orderOwnersByNumberPets();
@@ -555,7 +591,7 @@ class ClubTest {
 	// _________________________________________________________________________________________________________//
 	@Test
 	void secuencialSearchByIdCase2()  {
-		Owner owner = new Owner("7894561235", "Sujeto A", "ApellidoA", "19/05/1995", "DinosauriaA");
+		
 		setupScenary1();
 		String msg = club.secuencialSearchById("78dre5465r");
 		assertEquals("", msg);
@@ -608,7 +644,6 @@ class ClubTest {
 	// _________________________________________________________________________________________________________//
 	@Test
 	void secuencialSearchByOwnerDateCase2()  {
-		Owner owner = new Owner("7894561235", "Sujeto A", "ApellidoA", "19/05/1995", "DinosauriaA");
 		setupScenary1();
 		String msg = club.secuencialSearchByOwnerDate("78dre5465r");
 		assertEquals("", msg);
