@@ -70,7 +70,7 @@ public class Pet implements Serializable, Comparable<Pet>,Comparator<Pet> {
 	 * @return A Date type object
 	 */
 	public Date formatDate(String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = null;
 		try {
 			date = dateFormat.parse(format);

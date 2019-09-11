@@ -120,11 +120,11 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	/**
 	 * This method allows turn a String into a Date
 	 * 
-	 * @param format A date with the format "dd-mm-yyyy"
+	 * @param format A date with the format "mm-DD-yyyy"
 	 * @return A Date type object
 	 */
 	public Date formatDate(String format) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = null;
 		try {
 			date = dateFormat.parse(format);
@@ -268,6 +268,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchById(String id) {
+		orderPetsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -291,6 +292,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByName(String name) {
+		orderPetsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -315,6 +317,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByDate(String date) {
+		orderPetsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -338,6 +341,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
+		orderPetsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;

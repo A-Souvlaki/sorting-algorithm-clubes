@@ -34,7 +34,7 @@ public class ClubAdministration {
 		this.serializableFile = serilizableFile;
 		this.loadOwners = loadOwners;
 		this.loadPets = loadPets;
-		// Method by the persinstence
+		// Method by the persistence
 		clubs = loadclubs();
 		loadOwners(serilizableFile);
 		verifyInvariantOwners(loadOwners,loadPets);
@@ -71,7 +71,7 @@ public class ClubAdministration {
 						clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
 						writeOwners(serializableFile);
 						iterator++;
-					} while (iterator < 2);
+					} while (iterator < 20);
 				}
 				br.close();
 			} catch (IOException e) {
@@ -397,6 +397,7 @@ public class ClubAdministration {
 	// _________________________________________________________________________________________________________//
 
 	public String binarySearchById(String id) {
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -421,6 +422,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubName(String name) {
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -445,6 +447,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubDate(String date) {
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -469,6 +472,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;

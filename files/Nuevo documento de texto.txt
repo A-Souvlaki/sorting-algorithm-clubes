@@ -1,0 +1,50 @@
+dba9be90-5a35-449e-bda4-2b153cf78c87,Nina,Mcleod,9/20/1966,Eastern quoll
+98ef5805-3d58-4ab6-921a-b7eb4f1206e3,Maia,Everett,11/4/1972,Gray heron
+a6dfdd03-321a-42eb-a6b3-a001600e51e5,Denny,Wright,4/24/1988,Bald Eagle
+2ec3342a-f3f7-4b99-a734-6b8dfc2c08c2,Beatrice,Locke,12/19/1997,Herring gull
+8f441c20-68ca-4816-b68c-e0630322f2d0,Ivy,Button,5/7/1984,FireFly
+3c019c7a-7432-4231-a827-7b1d5c0f41bd,Harry,Tailor,3/11/1992,Lemur
+40a96be2-7781-4c43-a339-d573499dba96,Benjamin,Jackson,10/9/1971,King vulture
+ab18320e-104a-4a09-974d-7430f137aabc,Nina,Quinnell,12/25/1976,Gorilla
+b3de8b27-6d9d-489f-bf88-47b7c66bcc5b,Jade,Ranks,10/17/1987,Common wolf
+c96169ee-9fd0-477a-81b3-145c197aebe3,Tyson,Radcliffe,12/4/1989,Common ringtail
+b4521916-a43b-4ffd-b170-87cea54eca82,Erick,Mccall,6/21/1968,Puma
+60b4173e-9a8b-4a3d-b658-8941b6c96785,Fred,Kirby,10/8/1982,Clown Fish
+2f651ad7-f5c1-40bd-99d2-dcf21c115ff1,Bob,Shields,1/24/1982,Downy woodpecker
+06bdc317-c685-4b2c-8c38-d999149cdc30,Hadley,Bailey,5/3/1966,Hippopotamus
+da629e12-b9ca-4d4e-8f4f-7e47b39ef7d0,Josh,Poulton,11/13/1997,Common langur
+dccb1faf-654b-4ede-8c37-a8a7c2e587e9,David,Bingham,7/6/1994,Weasel
+bae94ce8-51a5-47f1-8dfb-329858a346ee,Phillip,Snow,1/25/1967,Wombat
+a052a4e6-de9c-451e-98d2-9421e53adfd1,Jaylene,Benson,3/7/1994,Jungle cat
+32df0c18-1696-4bd1-9032-02b2f3deedb2,Phillip,Oakley,11/9/1967,Galapagos tortoise
+3cf8a143-88fa-4165-ae9e-81c44f00ea09,Russel,Shields,5/16/1977,Duck
+6b5f2808-4b88-4cb7-ac9a-b92a63ee555f,Lauren,Trent,9/17/1966,Common duiker
+4cb1767e-8540-492b-aac0-9f7e66fe9203,Josh,Fenton,8/13/1973,Wombat
+71411c80-d848-40f5-9622-0a1262f0ddc9,Mike,Amstead,5/29/1980,Chestnut weaver
+eaf6f0ef-2db1-4545-832d-711fa964af19,Caydence,Richardson,3/24/1995,Gila monster
+c5ea4c4e-c888-41c3-b64b-8e40a4e2fec1,Noah,Logan,10/5/1979,Bald Eagle
+29534397-f0bb-4db4-be25-e239fb95070b,Gil,Reid,6/9/1979,Brown pelican
+6e4856f3-dbab-4cfc-a1cb-268157e18047,Charlize,Whatson,8/8/1976,Dabchick
+a661726b-6e01-45f9-92e6-d31dff50b853,Chadwick,Utterson,6/27/1967,Carmine bee-eater
+a6936c1b-3ccd-4f01-8aca-80b458fe5ae9,Anne,Radley,8/23/1966,Indian tree pie
+06ff9752-2f9b-403c-a2f9-1a535e653b8d,Aiden,Thomas,9/17/1970,Javanese cormorant
+9aaddc4b-5b15-45ee-8f34-faf5188b05a8,Georgia,Mccormick,4/20/1982,Vulture
+eb9bbe00-5556-478b-9448-f6e1be92d6bb,Cedrick,Becker,12/19/1989,Eastern grey kangaroo
+8f66b4eb-6e06-4653-8455-6b3f661bcf48,Eduardo,Knight,6/18/1989,Bat
+fe86bcdb-ce9a-44ae-9454-a8efbb478874,Harvey,Healy,6/15/1980,Zebra
+29098712-3a2c-41f3-9e2b-63b29c0878d5,Florence,Dann,9/5/1983,Donkey
+5cca48b5-c471-46b1-9feb-1d6f8d97240e,Ronald,Benson,6/14/1983,Kori bustard
+bd9a7631-672a-432e-bac5-c756ceec0933,Jack,Burge,4/25/1985,Blue peacock
+a71f9ceb-f355-4fac-8247-4ba2c46b7377,Adelaide,Abbey,4/26/1986,Japanese macaque
+692d7576-46f0-4913-8ff5-6ab436938344,Martha,Rees,9/3/1969,Indian star tortoise
+7bdd2f60-ce54-423d-8588-3050fbad040f,Remy,Stubbs,7/26/1991,Galapagos mockingbird
+7d0c9257-ad22-4158-aa1d-14ee088a3158,Denny,Moran,8/17/1992,Chacma baboon
+97686fa8-9ed3-47c1-ae95-9d308b34a33d,Jamie,Veale,3/21/1996,Dodo
+b0bde7d6-3298-4b2c-b397-760a900d78e4,Mason,York,3/10/1989,Indian jackal
+8d8825d8-0c45-4322-bae8-9bbae23682cf,Vivian,Redwood,1/26/1989,Sheep
+3041a5a3-b461-4e1c-b70c-7267aeb2a7fe,Payton,Becker,11/8/1986,Dusky rattlesnake
+8c01dabb-576c-4cd9-97e2-c8be1430d2ac,Alexander,Stanley,7/18/1986,Brown lemur
+c14e9f53-1b60-4ba3-b10f-9071af8f0cf6,Rae,Anderson,12/26/1993,Crab
+9b9c76c2-d3c2-4ea1-8224-ea97f686f301,Parker,Goldsmith,12/27/1994,Eastern grey kangaroo
+64369dde-0d1c-4d3d-959d-898b5d04b24a,Jacob,Ring,10/18/1995,Giant girdled lizard
+dab3ca6d-5a08-448b-a775-4936cd379c57,Jacob,Olson,2/14/1976,Polar Bear

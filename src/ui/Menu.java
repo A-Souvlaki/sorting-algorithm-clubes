@@ -26,7 +26,7 @@ public class Menu {
 	public Menu() {
 		reader = new Scanner(System.in);
 		try {
-			list = new ClubAdministration("files\\Clubes.CSV","files\\Serializable.dat","files\\test.CSV","files\\pets.CSV");
+			list = new ClubAdministration("files\\Clubes.csv","files\\Serializable.dat","files\\Owners.csv","files\\Pets.csv");
 		} catch (ElementExistsExcepcion e) {
 			e.printStackTrace();
 		}
