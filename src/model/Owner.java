@@ -292,7 +292,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByName(String name) {
-		orderPetsById();
+		orderPetsByName();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -317,7 +317,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByDate(String date) {
-		orderPetsById();
+		orderPetsByDate();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -341,7 +341,7 @@ public class Owner implements Serializable, Comparable<Owner>, Comparator<Owner>
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
-		orderPetsById();
+		orderPetsByType();
 		String msg = "";
 		boolean found = false;
 		int start = 0;

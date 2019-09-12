@@ -69,11 +69,12 @@ public class ClubAdministration {
 						String lines = br.readLine();
 						String[] write = lines.split(",");
 						clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
-						writeOwners(serializableFile);
+						
 						iterator++;
-					} while (iterator < 20);
+					} while (iterator < 200);
 				}
 				br.close();
+				writeOwners(serializableFile);
 			} catch (IOException e) {
 				e.getStackTrace();
 			}
@@ -100,12 +101,12 @@ public class ClubAdministration {
 							String[] write = lines.split(",");
 							clubs.get(i).getOwners().get(j).registerPet(write[0], write[1], write[2], write[3],
 									write[4]);
-							writeOwners(serializableFile);
 							iterator++;
 						} while (iterator < 1);
 					}
 				}
 				br.close();
+				writeOwners(serializableFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ElementExistsExcepcion e) {
@@ -422,7 +423,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubName(String name) {
-		orderClubsById();
+		orderClubsByClubName();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -447,7 +448,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubDate(String date) {
-		orderClubsById();
+		orderClubsByDate();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -472,7 +473,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
-		orderClubsById();
+		orderClubsByPet();
 		String msg = "";
 		boolean found = false;
 		int start = 0;

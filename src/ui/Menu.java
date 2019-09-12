@@ -26,7 +26,7 @@ public class Menu {
 	public Menu() {
 		reader = new Scanner(System.in);
 		try {
-			list = new ClubAdministration("files\\Clubes.csv","files\\Serializable.dat","files\\Owners.csv","files\\Pets.csv");
+			list = new ClubAdministration("files\\Clubes.csv","files\\SerializableTest.dat","files\\Owners.csv","files\\Pets.csv");
 		} catch (ElementExistsExcepcion e) {
 			e.printStackTrace();
 		}
@@ -129,7 +129,7 @@ public class Menu {
 		}catch(InputMismatchException e) {
 			System.out.println("Por favor digite una opcion valida :)...O tu windows se cerrara");
 			reader.nextLine();
-			
+			menuSystem();
 		} catch (OutOfRangeExcepcion e) {
 			System.out.println(e.getMessage());
 		}
@@ -578,7 +578,7 @@ public class Menu {
 				long tb1 = System.nanoTime();
 				System.out.println(list.searchClub(idClubn).searchOwner(idOwner).binarySearchByName(data));
 				long tb2 = System.nanoTime();
-				System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+" Nanosegundos\n");
+				System.out.println("Tiempo en ejecutar la busqueda binaria: " + (tb2-tb1)+" Nanosegundos\n"); 
 			}else if(valSubMenu3 == 3) {
 				long ts1 = System.nanoTime();
 				System.out.println(list.searchClub(idClubn).searchOwner(idOwner).secuencialSearchByDate(data));
