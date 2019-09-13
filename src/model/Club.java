@@ -349,7 +349,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByName(String name) {
-		orderOwnersByName();
+		orderOwnersById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -373,7 +373,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByLastName(String lastName) {
-		orderOwnersByLastName();
+		orderOwnersById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -397,7 +397,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByDate(String date) {
-		orderOwnersByDate();
+		orderOwnersById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -421,7 +421,7 @@ public class Club implements Serializable, Comparable<Club>, Comparator<Club> {
 	}
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
-		orderOwnersByPet();
+		orderOwnersById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;

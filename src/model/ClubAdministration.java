@@ -20,7 +20,7 @@ public class ClubAdministration {
 
 	private ArrayList<Club> clubs;
 
-	private String clubFile;
+	private String club;
 	private String serializableFile;
 	private String loadOwners;
 	private String loadPets;
@@ -28,9 +28,9 @@ public class ClubAdministration {
 	/*
 	 * Constructor
 	 */
-	public ClubAdministration(String clubFile, String serilizableFile, String loadOwners, String loadPets)
+	public ClubAdministration(String club, String serilizableFile, String loadOwners, String loadPets)
 			throws ElementExistsExcepcion {
-		this.clubFile = clubFile;
+		this.club = club;
 		this.serializableFile = serilizableFile;
 		this.loadOwners = loadOwners;
 		this.loadPets = loadPets;
@@ -69,12 +69,11 @@ public class ClubAdministration {
 						String lines = br.readLine();
 						String[] write = lines.split(",");
 						clubs.get(i).getOwners().add(new Owner(write[0], write[1], write[2], write[3], write[4]));
-						
+						writeOwners(serializableFile);
 						iterator++;
-					} while (iterator < 200);
+					} while (iterator < 20);
 				}
 				br.close();
-				writeOwners(serializableFile);
 			} catch (IOException e) {
 				e.getStackTrace();
 			}
@@ -101,12 +100,12 @@ public class ClubAdministration {
 							String[] write = lines.split(",");
 							clubs.get(i).getOwners().get(j).registerPet(write[0], write[1], write[2], write[3],
 									write[4]);
+							writeOwners(serializableFile);
 							iterator++;
 						} while (iterator < 1);
 					}
 				}
 				br.close();
-				writeOwners(serializableFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ElementExistsExcepcion e) {
@@ -182,7 +181,7 @@ public class ClubAdministration {
 	 */
 	private ArrayList<Club> loadclubs() {
 		ArrayList<Club> nclubs = new ArrayList<Club>();
-		File file = new File(clubFile);
+		File file = new File(club);
 		if (file.exists()) { // Verify if it is a file
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(file));// read the file
@@ -207,7 +206,7 @@ public class ClubAdministration {
 	 * This method allows to save the clubs in a text file.
 	 */
 	public void saveclubs() {
-		File file = new File(clubFile);
+		File file = new File(club);
 		try {
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -423,7 +422,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubName(String name) {
-		orderClubsByClubName();
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -448,7 +447,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByClubDate(String date) {
-		orderClubsByDate();
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
@@ -473,7 +472,7 @@ public class ClubAdministration {
 
 	// _________________________________________________________________________________________________________//
 	public String binarySearchByPet(String pet) {
-		orderClubsByPet();
+		orderClubsById();
 		String msg = "";
 		boolean found = false;
 		int start = 0;
